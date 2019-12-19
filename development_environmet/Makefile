@@ -33,3 +33,7 @@ db-upgrade:
 db-downgrade:
 	docker exec -t $(backend) pipenv run flask db downgrade
 
+# Run the tests
+backend-tests:
+	docker exec -t $(backend) pipenv run python tests/tests.py
+

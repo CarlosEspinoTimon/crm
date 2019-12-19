@@ -8,10 +8,10 @@ customers = Blueprint('customers', __name__, url_prefix='/customers')
 CORS(customers, max_age=30 * 86400)
 
 
-@customers.route('/', methods=['GET'])
+@customers.route('/dummy', methods=['GET'])
 def dummy_endpoint():
     """
-    .. http:get:: /customers/
+    .. http:get:: /customers/dummy
 
     Dummy endpoint that calls a method from the service that says hello.
 
