@@ -23,12 +23,16 @@ def create_app(app_config):
 
     CORS(app)
 
-    db.init_app(app)
-    migrate.init_app(app, db)
+    # db.init_app(app)
+    # migrate.init_app(app, db)
+
+    # Import blueprints
+    from .controllers.customer_controller import customers
+    app.register_blueprint(customers)
 
     # A simple page that says server status
     @app.route('/')
     def home():
-        return jsonify('The server is running!!')
+        return jsonify('The server is running!!!')
 
     return app
