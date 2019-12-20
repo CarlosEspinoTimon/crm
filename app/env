@@ -1,0 +1,14 @@
+# DEFAULT VARIABLES
+# ---------------------------------------------------------------------
+# Server variables for development
+FLASK_APP=main
+FLASK_ENV=development
+CONFIG_MODE='config.Dev'
+PYTHONUNBUFFERED=1
+
+
+# USER DEFINED VARIABLES
+# ---------------------------------------------------------------------
+# Production database URI
+DATABASE_URI=YOUR_MYSQL_URI
+
