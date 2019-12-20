@@ -79,6 +79,21 @@ def delete(user_id):
     return response
 
 
+def change_password(data, user_id):
+    user = User.query.get(user_id)
+    if user:
+        if not user.check_password(data.get('old_password')):
+            return jsonify('Wrong password'), 401
+        user.set_password(data.get('new_password'))
+        user.modified_by = data.get('id')
+        user.modified_at = datetime.now()
+        _save_user(user)
+        response = jsonify('Password sucessfully updated'), 200
+    else:
+        response = jsonify('User not found'), 404
+    return response
+
+
 def _save_user(user):
     db.session.add(user)
     db.session.commit()
