@@ -14,7 +14,8 @@ pymysql = "*"
 pyjwt = "*"
 mysqlclient = "*"
 python-dotenv = "*"
-
+flask-marshmallow = "*"
+marshmallow-sqlalchemy = "*"
 
 [requires]
 python_version = "3.7"
