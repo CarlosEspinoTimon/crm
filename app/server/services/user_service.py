@@ -1,6 +1,5 @@
 from datetime import datetime
 from flask import jsonify
-from marshmallow_sqlalchemy import ModelSchema
 
 from server import db
 from ..models.user import User, UserSchema
@@ -31,8 +30,10 @@ def create_user(data):
             name=data.get('name'),
             surname=data.get('surname'),
             created_at=datetime.now(),
+            # TODO get id for the user that creates it
             created_by=1,
             modified_at=datetime.now(),
+            # TODO get id for the user that modifies it
             modified_by=1,
             password_hash=data.get('password')
         )
@@ -51,6 +52,7 @@ def update_user(data, user_id):
         for field in fields_to_update:
             if data.get(field):
                 setattr(user, field, data[field])
+        # TODO get id for the user that modifies it
         user.modified_by = 1
         user.modified_at = datetime.now()
         _save_user(user)
@@ -60,10 +62,11 @@ def update_user(data, user_id):
     return response
 
 
-def delete(user_id, admin_id):
+def delete(user_id):
     user = User.query.get(user_id)
     if user:
-        user.modified_by = admin_id
+        # TODO get id for the user that modifies it
+        user.modified_by = 1
         user.modified_at = datetime.now()
         user.is_deleted = True
         _save_user(user)
