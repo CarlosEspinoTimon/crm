@@ -38,6 +38,8 @@ def create_app(app_config):
     app.register_blueprint(customers)
     from .controllers.user_controller import users
     app.register_blueprint(users)
+    from .controllers.authentication_controller import authentication
+    app.register_blueprint(authentication)
 
     # A simple page that says server status
     @app.route('/')
