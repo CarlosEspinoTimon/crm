@@ -16,14 +16,19 @@ CORS(customers, max_age=30 * 86400)
 
 
 @customers.route('/')
+@check_user_token
 def get_all_customers():
     """
     .. http:get:: /customers/
 
     Function that returns all the customers.
 
+    This endpoint is protected and only users can use it by passing their
+    authentication token through the Authorization Header.
+
     :returns: The Customers.
     :rtype: list.
+    :reqheader Authorization: Bearer token
     """
     return all_customers()
 
@@ -36,12 +41,15 @@ def get_customer(customer_id):
 
     Function that given an id it returns the customer.
 
+    This endpoint is protected and only users can use it by passing their
+    authentication token through the Authorization Header.
+
     :param customer_id: the id of the customer.
     :type customer_id: int
 
     :returns: The customer
     :rtype: Customer
-
+    :reqheader Authorization: Bearer token
     """
     return get_a_customer(customer_id)
 
@@ -53,6 +61,9 @@ def post_customer():
     .. http:post:: /customers
 
     Function that given the customer data it creates it.
+
+    This endpoint is protected and only users can use it by passing their
+    authentication token through the Authorization Header.
 
     Example::
 
@@ -68,7 +79,7 @@ def post_customer():
 
     :param body: the data of the customer sent in the body of the request.
     :type body: dict
-
+    :reqheader Authorization: Bearer token
     """
     data = request.get_json()
     return create_customer(data)
@@ -82,6 +93,9 @@ def put_customer(customer_id):
 
     Function that given the customer_id it updates it with the data sent in the
     body of the request.
+
+    This endpoint is protected and only users can use it by passing their
+    authentication token through the Authorization Header.
 
     Example::
 
@@ -98,6 +112,7 @@ def put_customer(customer_id):
     :type customer_id: int
     :param body: the data of the customer sent in the body of the request.
     :type body: dict
+    :reqheader Authorization: Bearer token
     """
     data = request.get_json()
     print("EEEEEE ", request.get_json())
@@ -117,6 +132,7 @@ def delete_customer(customer_id, id_obtained_from_token):
 
     :param customer_id: the id of the customer.
     :type customer_id: int
+    :reqheader Authorization: Bearer token
     :reqheader Authorization: Bearer token
     """
     

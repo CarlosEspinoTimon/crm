@@ -49,8 +49,10 @@ def decode_token(token, **kwargs):
 
 
 def get_user_id_from_token(payload, **kwargs):
+    # When request method is not posible to add params to the request
     if request.method == 'DELETE':
         kwargs['id_obtained_from_token'] = payload['id']
-    else:
+    # When using GET there is no need to obtain user id
+    elif request.method != 'GET':
         request.json['id'] = payload['id']
     return kwargs

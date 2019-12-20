@@ -32,10 +32,8 @@ def create_customer(data):
             name=data.get('name'),
             surname=data.get('surname'),
             photo_url=photo_url,
-            # TODO get id from user
-            created_by=1,
-            # TODO get id from user
-            last_modified_by=1,
+            created_by=data.get('id'),
+            last_modified_by=data.get('id'),
             created_at=datetime.now(),
             last_modified_at=datetime.now()
         )
@@ -58,8 +56,7 @@ def update_customer(data, customer_id):
                 setattr(customer, field, data[field])
         if photo_url:
             customer.photo_url = photo_url
-        # TODO get id from user
-        customer.last_modified_by = 1
+        customer.last_modified_by = data.get('id')
         customer.last_modified_at = datetime.now()
         _save_customer(customer)
         response = jsonify('Customer sucessfully updated'), 200
@@ -68,11 +65,10 @@ def update_customer(data, customer_id):
     return response
 
 
-def delete_a_customer(customer_id):
+def delete_a_customer(customer_id, user_id):
     customer = Customer.query.get(customer_id)
     if customer:
-        # TODO get id from user
-        customer.last_modified_by = 1
+        customer.last_modified_by = user_id
         customer.last_modified_at = datetime.now()
         customer.is_deleted = True
         _save_customer(customer)
