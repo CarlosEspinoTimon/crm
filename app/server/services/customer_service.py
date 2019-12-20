@@ -68,7 +68,7 @@ def update_customer(data, customer_id):
     return response
 
 
-def delete(customer_id):
+def delete_a_customer(customer_id):
     customer = Customer.query.get(customer_id)
     if customer:
         # TODO get id from user

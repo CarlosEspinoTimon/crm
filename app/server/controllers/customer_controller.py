@@ -2,11 +2,13 @@ from flask import Blueprint
 from flask import request
 from flask_cors import CORS
 
+from ..utils.check_user_decorator import check_user_token
 from ..services.customer_service import (
     all_customers,
     get_a_customer,
     create_customer,
-    update_customer
+    update_customer,
+    delete_a_customer
 )
 
 customers = Blueprint('customers', __name__, url_prefix='/customers')
@@ -27,6 +29,7 @@ def get_all_customers():
 
 
 @customers.route('/<int:customer_id>')
+@check_user_token
 def get_customer(customer_id):
     """
     .. http:get:: /customers/(int:customer_id)
@@ -44,6 +47,7 @@ def get_customer(customer_id):
 
 
 @customers.route('', methods=['POST'])
+@check_user_token
 def post_customer():
     """
     .. http:post:: /customers
@@ -71,6 +75,7 @@ def post_customer():
 
 
 @customers.route('/<int:customer_id>', methods=['PUT'])
+@check_user_token
 def put_customer(customer_id):
     """
     .. http:put:: /customers/(int:customer_id)
@@ -95,5 +100,24 @@ def put_customer(customer_id):
     :type body: dict
     """
     data = request.get_json()
+    print("EEEEEE ", request.get_json())
     return update_customer(data, customer_id)
 
+
+@customers.route('/<int:customer_id>', methods=['DELETE'])
+@check_user_token
+def delete_customer(customer_id, id_obtained_from_token):
+    """
+    .. http:delete:: /customers/(int:customer_id)
+
+    Function that given the customer id it deletes it.
+
+    This endpoint is protected and only users can use it by passing their
+    authentication token through the Authorization Header.
+
+    :param customer_id: the id of the customer.
+    :type customer_id: int
+    :reqheader Authorization: Bearer token
+    """
+    
+    return delete_a_customer(customer_id, id_obtained_from_token)
