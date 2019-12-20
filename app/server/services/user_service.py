@@ -37,6 +37,7 @@ def create_user(data):
             modified_by=1,
             password_hash=data.get('password')
         )
+        user.set_password(data.get('password'))
         _save_user(user)
         user_schema = UserSchema()
         response = user_schema.dump(user), 201
@@ -55,6 +56,8 @@ def update_user(data, user_id):
         # TODO get id for the user that modifies it
         user.modified_by = 1
         user.modified_at = datetime.now()
+        if data.get('password'):
+            user.set_password(data['password'])
         _save_user(user)
         response = jsonify('User sucessfully updated'), 200
     else:
