@@ -2,7 +2,8 @@ from flask import Blueprint
 from flask import request
 from flask_cors import CORS
 
-from .check_user_decorator import check_user_token
+from .decorators import check_user_token
+from .token_managment import get_user_id_from_token
 from ..services.customer_service import (
     all_customers,
     get_a_customer,
@@ -82,6 +83,7 @@ def post_customer():
     :reqheader Authorization: Bearer token
     """
     data = request.get_json()
+    data['id'] = get_user_id_from_token()
     return create_customer(data)
 
 
@@ -115,12 +117,13 @@ def put_customer(customer_id):
     :reqheader Authorization: Bearer token
     """
     data = request.get_json()
+    data['id'] = get_user_id_from_token()
     return update_customer(data, customer_id)
 
 
 @customers.route('/<int:customer_id>', methods=['DELETE'])
 @check_user_token
-def delete_customer(customer_id, id_obtained_from_token):
+def delete_customer(customer_id):
     """
     .. http:delete:: /customers/(int:customer_id)
 
@@ -134,5 +137,5 @@ def delete_customer(customer_id, id_obtained_from_token):
     :reqheader Authorization: Bearer token
     :reqheader Authorization: Bearer token
     """
-
-    return delete_a_customer(customer_id, id_obtained_from_token)
+    user_id = get_user_id_from_token()
+    return delete_a_customer(customer_id, user_id)
