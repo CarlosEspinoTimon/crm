@@ -37,6 +37,7 @@ def create_user(data):
             modified_by=1,
             password_hash=data.get('password')
         )
+        user.set_password(data.get('password'))
         _save_user(user)
         user_schema = UserSchema()
         response = user_schema.dump(user), 201
@@ -55,6 +56,8 @@ def update_user(data, user_id):
         # TODO get id for the user that modifies it
         user.modified_by = 1
         user.modified_at = datetime.now()
+        if data.get('password'):
+            user.set_password(data['password'])
         _save_user(user)
         response = jsonify('User sucessfully updated'), 200
     else:
@@ -62,7 +65,7 @@ def update_user(data, user_id):
     return response
 
 
-def delete(user_id):
+def delete_a_user(user_id):
     user = User.query.get(user_id)
     if user:
         # TODO get id for the user that modifies it
@@ -71,6 +74,21 @@ def delete(user_id):
         user.is_deleted = True
         _save_user(user)
         response = jsonify('User deleted'), 200
+    else:
+        response = jsonify('User not found'), 404
+    return response
+
+
+def change_password(data, user_id):
+    user = User.query.get(user_id)
+    if user:
+        if not user.check_password(data.get('old_password')):
+            return jsonify('Wrong password'), 401
+        user.set_password(data.get('new_password'))
+        user.modified_by = data.get('id')
+        user.modified_at = datetime.now()
+        _save_user(user)
+        response = jsonify('Password sucessfully updated'), 200
     else:
         response = jsonify('User not found'), 404
     return response

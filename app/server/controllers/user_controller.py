@@ -6,7 +6,9 @@ from ..services.user_service import (
     all_users,
     get_a_user,
     create_user,
-    update_user
+    update_user, 
+    change_password,
+    delete_a_user
 )
 
 users = Blueprint('users', __name__, url_prefix='/users')
@@ -91,3 +93,39 @@ def put_user(user_id):
     return update_user(data, user_id)
 
 
+@users.route('/<int:user_id>/change-password', methods=['PUT'])
+def change_user_password(user_id):
+    """
+    .. http:put:: /users/(int:user_id)/change-password
+
+    Function that given the user_id it updates its password with the
+    information sent in the body of the request.
+
+    Example::
+
+        body = {
+            'old_password': 'old_pass',
+            'new_password': 'new_pass',
+        }
+
+    :param user_id: the id of the user.
+    :type user_id: int
+    :param body: the data of the user sent in the body of the request.
+    :type body: dict
+    """
+    data = request.get_json()
+    return change_password(data, user_id)
+
+
+@users.route('/<int:user_id>', methods=['DELETE'])
+def delete_user(user_id):
+    """
+    .. http:delete:: /users/(int:user_id)
+
+    Function that given the user id it deletes it.
+
+    :param user_id: the id of the user.
+    :type user_id: int
+    :reqheader Authorization: Bearer token
+    """
+    return delete_a_user(user_id)
