@@ -6,10 +6,16 @@ from ..services.user_service import (
     all_users,
     get_a_user,
     create_user,
-    update_user, 
+    update_user,
     change_password,
     delete_a_user
 )
+from ..models.user import (
+    CreateUserSchema,
+    UpdateUserSchema,
+    ChangePasswordSchema
+)
+from .decorators import validate_schema
 
 users = Blueprint('users', __name__, url_prefix='/users')
 CORS(users, max_age=30 * 86400)
@@ -46,6 +52,7 @@ def get_user(user_id):
 
 
 @users.route('', methods=['POST'])
+@validate_schema(CreateUserSchema())
 def post_user():
     """
     .. http:post:: /users
@@ -70,6 +77,7 @@ def post_user():
 
 
 @users.route('/<int:user_id>', methods=['PUT'])
+@validate_schema(UpdateUserSchema())
 def put_user(user_id):
     """
     .. http:put:: /users/(int:user_id)
@@ -94,6 +102,7 @@ def put_user(user_id):
 
 
 @users.route('/<int:user_id>/change-password', methods=['PUT'])
+@validate_schema(ChangePasswordSchema())
 def change_user_password(user_id):
     """
     .. http:put:: /users/(int:user_id)/change-password

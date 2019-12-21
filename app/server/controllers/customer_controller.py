@@ -2,7 +2,7 @@ from flask import Blueprint
 from flask import request
 from flask_cors import CORS
 
-from .decorators import check_user_token
+from .decorators import check_user_token, validate_schema
 from .token_managment import get_user_id_from_token
 from ..services.customer_service import (
     all_customers,
@@ -10,6 +10,10 @@ from ..services.customer_service import (
     create_customer,
     update_customer,
     delete_a_customer
+)
+from ..models.customer import (
+    CreateCustomerSchema,
+    UpdateCustomerSchema
 )
 
 customers = Blueprint('customers', __name__, url_prefix='/customers')
@@ -57,6 +61,7 @@ def get_customer(customer_id):
 
 @customers.route('', methods=['POST'])
 @check_user_token
+@validate_schema(CreateCustomerSchema())
 def post_customer():
     """
     .. http:post:: /customers
@@ -89,6 +94,7 @@ def post_customer():
 
 @customers.route('/<int:customer_id>', methods=['PUT'])
 @check_user_token
+@validate_schema(UpdateCustomerSchema())
 def put_customer(customer_id):
     """
     .. http:put:: /customers/(int:customer_id)

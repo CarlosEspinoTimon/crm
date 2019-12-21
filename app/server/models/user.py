@@ -3,6 +3,7 @@ from flask import current_app as app
 from time import time
 from werkzeug.security import generate_password_hash, check_password_hash
 import jwt
+from marshmallow import Schema, fields
 
 from server import db, ma
 
@@ -47,3 +48,20 @@ class UserSchema(ma.ModelSchema):
         model = User
         include_fk = True
         exclude = ['password_hash']
+
+
+class CreateUserSchema(Schema):
+    email = fields.Str(required=True)
+    name = fields.Str(required=True)
+    surname = fields.Str(required=True)
+    password = fields.Str(required=True)
+
+
+class UpdateUserSchema(Schema):
+    name = fields.Str(required=True)
+    surname = fields.Str(required=True)
+
+
+class ChangePasswordSchema(Schema):
+    old_password = fields.Str(required=True)
+    new_password = fields.Str(required=True)

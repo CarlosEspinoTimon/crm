@@ -128,6 +128,52 @@ class TestCustomer(BaseTestClass):
         customer = Customer.query.get(1)
         self.assertEqual(customer.is_deleted, True)
 
+    def test_wrong_params_customer_creation(self):
+        self.create_user()
+        data = {
+            'email': 'customer@email.com',
+            'surname': 'surname',
+        }
+        res = self.tester_app.post(
+            '/customers',
+            data=json.dumps(data),
+            headers={
+                'Content-Type': 'application/json',
+                'Authorization': self.get_token()
+            })
+        self.assertEqual(res.status_code, 400)
+        data = json.loads(res.get_data(as_text=True))
+        expected_response = dict(
+            eval('''{
+                "name": [
+                    "Missing data for required field."
+                    ]
+                }'''))
+        response = dict(data)
+        self.assertDictEqual(response, expected_response)
+
+    def test_wrong_params_customer_update(self):
+        self.create_user()
+        self.create_customer()
+        data = {
+            'surname': 'surname2',
+        }
+        res = self.tester_app.put('/customers/1',
+                                  data=json.dumps(data),
+                                  headers={
+                                      'Content-Type': 'application/json',
+                                      'Authorization': self.get_token()
+                                  })
+        self.assertEqual(res.status_code, 400)
+        data = json.loads(res.get_data(as_text=True))
+        expected_response = dict(
+            eval('''{
+                "name": [
+                    "Missing data for required field."
+                    ]
+                }'''))
+        response = dict(data)
+        self.assertDictEqual(response, expected_response)
 
 if __name__ == '__main__':
     unittest.main()

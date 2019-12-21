@@ -1,4 +1,5 @@
 from datetime import datetime
+from marshmallow import Schema, fields
 
 from server import db, ma
 
@@ -42,3 +43,20 @@ class CustomerSchema(ma.ModelSchema):
         model = Customer
         include_fk = True
 
+
+class PhotoSchema(Schema):
+    str_image = fields.Str(required=True)
+    extension = fields.Str(required=True)
+
+
+class CreateCustomerSchema(Schema):
+    email = fields.Str(required=True)
+    name = fields.Str(required=True)
+    surname = fields.Str(required=True)
+    photo = fields.Nested(PhotoSchema, required=False)
+
+
+class UpdateCustomerSchema(Schema):
+    name = fields.Str(required=True)
+    surname = fields.Str(required=True)
+    photo = fields.Nested(PhotoSchema, required=False)
