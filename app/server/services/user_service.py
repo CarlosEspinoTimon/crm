@@ -65,7 +65,7 @@ def update_user(data, user_id):
     return response
 
 
-def delete(user_id):
+def delete_a_user(user_id):
     user = User.query.get(user_id)
     if user:
         # TODO get id for the user that modifies it

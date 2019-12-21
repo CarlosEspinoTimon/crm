@@ -115,7 +115,6 @@ def put_customer(customer_id):
     :reqheader Authorization: Bearer token
     """
     data = request.get_json()
-    print("EEEEEE ", request.get_json())
     return update_customer(data, customer_id)
 
 
@@ -135,5 +134,5 @@ def delete_customer(customer_id, id_obtained_from_token):
     :reqheader Authorization: Bearer token
     :reqheader Authorization: Bearer token
     """
-    
+
     return delete_a_customer(customer_id, id_obtained_from_token)
