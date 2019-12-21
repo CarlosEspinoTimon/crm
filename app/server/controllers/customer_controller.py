@@ -2,7 +2,7 @@ from flask import Blueprint
 from flask import request
 from flask_cors import CORS
 
-from ..utils.check_user_decorator import check_user_token
+from .check_user_decorator import check_user_token
 from ..services.customer_service import (
     all_customers,
     get_a_customer,
