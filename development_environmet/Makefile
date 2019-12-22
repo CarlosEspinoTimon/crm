@@ -37,3 +37,6 @@ db-downgrade:
 backend-tests:
 	docker exec -t $(backend) pipenv run python tests/tests.py
 
+# Init the debuger
+debug-backend:
+	export FLASK_DEBUG=1 && docker-compose -f docker-compose.debug.yaml up
