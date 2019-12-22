@@ -51,7 +51,7 @@ def update_user(data, user_id):
     if user:
         fields_to_update = ['name', 'surname']
         for field in fields_to_update:
-            if data.get(field):
+            if field in data:
                 setattr(user, field, data[field])
         # TODO get id for the user that modifies it
         user.modified_by = 1

@@ -3,6 +3,7 @@ from flask import jsonify
 
 from server import db
 from ..models.customer import Customer, CustomerSchema
+from .image_managment import get_photo_url
 
 
 def all_customers():
@@ -25,8 +26,7 @@ def get_a_customer(customer_id):
 def create_customer(data):
     customer = Customer.query.filter_by(email=data['email']).first()
     if not customer:
-        # TODO handle photo upload
-        photo_url = 'fake-foto-url'
+        photo_url = get_photo_url(data)
         customer = Customer(
             email=data.get('email'),
             name=data.get('name'),
@@ -48,11 +48,10 @@ def create_customer(data):
 def update_customer(data, customer_id):
     customer = Customer.query.get(customer_id)
     if customer:
-        # TODO handle photo upload
-        photo_url = 'fake-foto-url'
+        photo_url = get_photo_url(data)
         fields_to_update = ['name', 'surname']
         for field in fields_to_update:
-            if data.get(field):
+            if field in data:
                 setattr(customer, field, data[field])
         if photo_url:
             customer.photo_url = photo_url
