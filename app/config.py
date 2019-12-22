@@ -11,6 +11,8 @@ class Config():
     SQLALCHEMY_TRACK_MODIFICATIONS = 'False'
     GOOGLE_PROJECT = os.environ.get('GOOGLE_PROJECT')
     GOOGLE_BUCKET = os.environ.get('GOOGLE_BUCKET')
+    STORED_IMAGE_PREFIX = "{}{}/".format(
+        os.environ.get('GOOGLE_BUCKET_PREFIX'), GOOGLE_BUCKET)
 
 class Prod(Config):
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URI')
