@@ -3,6 +3,7 @@
 
 from test_server import *
 from test_customer import *
+from test_authentication import *
 
 import unittest
 import pathmagic
