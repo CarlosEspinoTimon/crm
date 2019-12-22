@@ -16,6 +16,7 @@ mysqlclient = "*"
 python-dotenv = "*"
 flask-marshmallow = "*"
 marshmallow-sqlalchemy = "*"
+ptvsd = "*"
 
 [requires]
 python_version = "3.7"
