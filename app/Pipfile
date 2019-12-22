@@ -17,6 +17,8 @@ python-dotenv = "*"
 flask-marshmallow = "*"
 marshmallow-sqlalchemy = "*"
 ptvsd = "*"
+google = "*"
+google-cloud-storage = "*"
 
 [requires]
 python_version = "3.7"
