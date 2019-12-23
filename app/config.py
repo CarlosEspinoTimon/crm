@@ -21,8 +21,16 @@ class Config():
         'google': Credentials(
             os.environ.get("GOOGLE_CLIENT_ID", None),
             os.environ.get("GOOGLE_CLIENT_SECRET", None)
+        ),
+        'facebook': Credentials(
+            os.environ.get("FACEBOOK_CLIENT_ID", None),
+            os.environ.get("FACEBOOK_CLIENT_SECRET", None)
         )
     }
+    FACEBOOK_AUTHORIZE_URL = os.environ.get("FACEBOOK_AUTHORIZE_URL", None)
+    FACEBOOK_ACCESS_TOKEN_URL = os.environ.get(
+        "FACEBOOK_ACCESS_TOKEN_URL", None)
+    FACEBOOK_USER_INFO_URL = os.environ.get("FACEBOOK_USER_INFO_URL", None)
 
 class Prod(Config):
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URI')

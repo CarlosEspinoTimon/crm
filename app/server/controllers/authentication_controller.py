@@ -28,8 +28,9 @@ def oauth_authorize(provider):
     """
     .. http:get:: /login/<provider>
 
-    Function that given a provider from the available providers (google) it
-    will return the uri to go to login with the third party OAuth provider.
+    Function that given a provider from the available providers (google and
+    facebook) it will return the uri to go to login with the third party OAuth
+    provider.
 
     Return example:
         {

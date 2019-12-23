@@ -36,10 +36,10 @@ class OAuthSignIn():
     def callback(self):
         pass
 
-    def check__for_user_in_database(self, email):
+    def check_for_user_in_database(self, email):
         user = User.query.filter_by(email=email).first()
         if not user:
-            return jsonify('Forbidden'), 403
+            return jsonify('Forbidden, You are not registered as User'), 403
         else:
             return jsonify('Token: {}'.format(user.generate_auth_token(1800)))
 
@@ -110,4 +110,53 @@ class GoogleSignIn(OAuthSignIn):
         else:
             return jsonify("User email not available or not verified by Google."), 400
 
-        return super().check__for_user_in_database(user_email)
+        return super().check_for_user_in_database(user_email)
+
+
+class FacebookSignIn(OAuthSignIn):
+
+    def __init__(self):
+        super(FacebookSignIn, self).__init__('facebook')
+        self.client = WebApplicationClient(self.consumer_id)
+        self.authorize_url = app.config["FACEBOOK_AUTHORIZE_URL"]
+        self.access_token_url = app.config["FACEBOOK_ACCESS_TOKEN_URL"]
+        self.user_info_url = app.config["FACEBOOK_USER_INFO_URL"]
+
+    def authorize(self):
+        request_uri = self.client.prepare_request_uri(
+            self.authorize_url,
+            redirect_uri=request.base_url + "/callback",
+            scope=["email"],
+        )
+
+        return jsonify({'uri': request_uri})
+
+    def callback(self):
+        code = request.args.get("code")
+
+        token_url, headers, body = self.client.prepare_token_request(
+            self.access_token_url,
+            authorization_response=request.url,
+            redirect_url=request.base_url,
+            code=code
+        )
+        token_response = requests.post(
+            token_url,
+            headers=headers,
+            data=body,
+            auth=(
+                self.consumer_id,
+                self.consumer_secret
+            ),
+        )
+
+        self.client.parse_request_body_response(
+            json.dumps(token_response.json())
+        )
+
+        uri, headers, body = self.client.add_token(self.user_info_url)
+        userinfo_response = requests.get(uri, headers=headers, data=body)
+
+        user_email = userinfo_response.json()["email"]
+
+        return super().check_for_user_in_database(user_email)

@@ -9,7 +9,8 @@ def process_token():
         token = authorization_header.split('Bearer ')[1]
         return decode_token(token)
     else:
-        return jsonify('Forbidden'), 403
+        error = 'Forbidden, there must be a token as Authorization header'
+        return jsonify(error), 403
 
 
 def decode_token(token):
