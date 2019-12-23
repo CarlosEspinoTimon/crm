@@ -19,6 +19,8 @@ marshmallow-sqlalchemy = "*"
 ptvsd = "*"
 google = "*"
 google-cloud-storage = "*"
+oauthlib = "*"
+pyopenssl = "*"
 
 [requires]
 python_version = "3.7"

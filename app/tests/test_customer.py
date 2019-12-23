@@ -40,7 +40,7 @@ class TestCustomer(BaseTestClass):
                                     'email': 'customer@email.com',
                                     'name': 'customer',
                                     'surname': 'surname',
-                                    'photo_url': 'fake-foto-url',
+                                    'photo_url': None,
                                     'created_by': 1,
                                     'last_modified_by': 1,
                                     'is_deleted': False}'''))
