@@ -30,7 +30,7 @@ def create_customer(data):
         if 'photo' in data:
             # TODO init class just once
             image = Image()
-            photo_url = image.upload(data, customer.photo_url)
+            photo_url = image.upload(data)
         customer = Customer(
             email=data.get('email'),
             name=data.get('name'),
@@ -82,17 +82,6 @@ def delete_a_customer(customer_id, user_id):
         response = jsonify('Customer not found'), 404
     return response
 
-
-# def get_photo_url(data):
-#     photo_url = None
-#     if data.get('photo'):
-#         image = data['photo'].get('str_image')
-#         extension = data['photo'].get('extension')
-#         content_type = 'image/{}'.format(extension[1:])
-#         # TODO init class just once
-#         image_handler = ImageManagment()
-#         photo_url = image_handler.upload(image, content_type, extension)
-#     return photo_url
 
 def _save_customer(customer):
     db.session.add(customer)

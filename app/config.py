@@ -13,6 +13,24 @@ class Config():
     GOOGLE_BUCKET = os.environ.get('GOOGLE_BUCKET')
     STORED_IMAGE_PREFIX = "{}{}/".format(
         os.environ.get('GOOGLE_BUCKET_PREFIX'), GOOGLE_BUCKET)
+    GOOGLE_CLIENT_ID = os.environ.get("GOOGLE_CLIENT_ID", None)
+    GOOGLE_CLIENT_SECRET = os.environ.get("GOOGLE_CLIENT_SECRET", None)
+    GOOGLE_DISCOVERY_URL = os.environ.get("GOOGLE_DISCOVERY_URL", None)
+    Credentials = namedtuple('Credentials', 'id secret')
+    OAUTH_CREDENTIALS = {
+        'google': Credentials(
+            os.environ.get("GOOGLE_CLIENT_ID", None),
+            os.environ.get("GOOGLE_CLIENT_SECRET", None)
+        ),
+        'facebook': Credentials(
+            os.environ.get("FACEBOOK_CLIENT_ID", None),
+            os.environ.get("FACEBOOK_CLIENT_SECRET", None)
+        )
+    }
+    FACEBOOK_AUTHORIZE_URL = os.environ.get("FACEBOOK_AUTHORIZE_URL", None)
+    FACEBOOK_ACCESS_TOKEN_URL = os.environ.get(
+        "FACEBOOK_ACCESS_TOKEN_URL", None)
+    FACEBOOK_USER_INFO_URL = os.environ.get("FACEBOOK_USER_INFO_URL", None)
 
 class Prod(Config):
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URI')
