@@ -134,3 +134,7 @@ dmypy.json
 
 # Ignore real_app.yaml
 real_app.yaml
+
+# Sphinx documentation
+# /app/docs/_build/
+/app/docs/_build/doctrees/

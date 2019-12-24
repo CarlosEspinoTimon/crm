@@ -40,28 +40,3 @@ class User(db.Model):
             },
             app.config['SECRET_KEY'], algorithm='HS256'
         ).decode('utf-8')
-
-
-class UserSchema(ma.ModelSchema):
-
-    class Meta:
-        model = User
-        include_fk = True
-        exclude = ['password_hash']
-
-
-class CreateUserSchema(Schema):
-    email = fields.Str(required=True)
-    name = fields.Str(required=True)
-    surname = fields.Str(required=True)
-    password = fields.Str(required=True)
-
-
-class UpdateUserSchema(Schema):
-    name = fields.Str(required=True)
-    surname = fields.Str(required=True)
-
-
-class ChangePasswordSchema(Schema):
-    old_password = fields.Str(required=True)
-    new_password = fields.Str(required=True)

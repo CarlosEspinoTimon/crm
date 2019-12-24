@@ -40,3 +40,8 @@ backend-tests:
 # Init the debuger
 debug-backend:
 	export FLASK_DEBUG=1 && docker-compose -f docker-compose.debug.yaml up
+
+# Generate documentation
+documentation:
+	# docker exec $(backend) /bin/sh -c 'cd docs && pipenv run sphinx-apidoc -o . ../server/ -M --ext-autodoc -f && pipenv run make clean && pipenv run make html'
+	docker exec $(backend) /bin/sh -c 'cd docs && pipenv run sphinx-apidoc -o . ../server/ --ext-autodoc && pipenv run make clean && pipenv run make html'

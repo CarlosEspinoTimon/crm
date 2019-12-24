@@ -21,6 +21,9 @@ google = "*"
 google-cloud-storage = "*"
 oauthlib = "*"
 pyopenssl = "*"
+sphinx = "*"
+sphinx-rtd-theme = "*"
+sphinxcontrib-httpdomain = "*"
 
 [requires]
 python_version = "3.7"
