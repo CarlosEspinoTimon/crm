@@ -103,6 +103,7 @@ celerybeat.pid
 
 # Environments
 .env
+.env.copy
 .venv
 env/
 venv/
@@ -130,3 +131,6 @@ dmypy.json
 
 # Ignore credentials folder
 .credentials/
+
+# Ignore real_app.yaml
+real_app.yaml
