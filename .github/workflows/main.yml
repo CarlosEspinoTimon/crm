@@ -27,6 +27,7 @@ jobs:
       GOOGLE_PROJECT: ${{ secrets.GOOGLE_PROJECT}}
       GOOGLE_BUCKET: ${{ secrets.GOOGLE_BUCKET}}
       GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS}}
+      DATABASE_URI: ${{ secrets.DATABASE_URI}}
 
     steps:
     - uses: actions/checkout@v1
@@ -34,9 +35,30 @@ jobs:
       run: docker-compose -f docker-compose-cicd.yaml up -d
       working-directory: ./development_environment
     - name: Runnint the tests...
-      run: docker exec -i ${docker-compose -f docker-compose-cide.yaml ps -q backend} pipenv run python tests.py
+      run: docker exec -i ${docker-compose -f docker-compose-cidd.yaml ps -q backend} pipenv run python tests.py
       working-directory: ./development_environment
     - name: Run a multi-line script
       run: |
         echo Add other actions to build,
         echo test, and deploy your project.
+    - name: Modify app.yml
+      run: |
+        sh """sed -i "s*YOUR_DATABASE_URI*${env.DATABASE_URI}*g" /var/lib/jenkins/workspace/crm_pipeline/backend/app.yaml"""
+        sh """sed -i "s*YOUR_GOOGLE_CLIENT_ID*${env.GOOGLE_CLIENT_ID}*g" /var/lib/jenkins/workspace/crm_pipeline/backend/app.yaml"""
+        sh """sed -i "s*YOUR_GOOGLE_CLIENT_SECRET*${env.GOOGLE_CLIENT_SECRET}*g" /var/lib/jenkins/workspace/crm_pipeline/backend/app.yaml"""
+        sh """sed -i "s*YOUR_GOOGLE_APPLICATION_CREDENTIALS*.credentials/crm-service-storage-key.json*g" /var/lib/jenkins/workspace/crm_pipeline/backend/app.yaml"""
+        sh """sed -i "s*YOUR_GOOGLE_PROJECT*${env.GOOGLE_PROJECT}*g" /var/lib/jenkins/workspace/crm_pipeline/backend/app.yaml"""
+        sh """sed -i "s*YOUR_GOOGLE_BUCKET*${env.GOOGLE_BUCKET}*g" /var/lib/jenkins/workspace/crm_pipeline/backend/app.yaml"""
+        sh """sed -i "s*YOUR_GOOGLE_DISCOVERY_URL*${env.GOOGLE_DISCOVERY_URL}*g" /var/lib/jenkins/workspace/crm_pipeline/backend/app.yaml"""
+        sh """sed -i "s*YOUR_FACEBOOK_CLIENT_ID*${env.FACEBOOK_CLIENT_ID}*g" /var/lib/jenkins/workspace/crm_pipeline/backend/app.yaml"""
+        sh """sed -i "s*YOUR_FACEBOOK_CLIENT_SECRET*${env.FACEBOOK_CLIENT_SECRET}*g" /var/lib/jenkins/workspace/crm_pipeline/backend/app.yaml"""
+        sh """sed -i "s*YOUR_FACEBOOK_AUTHORIZE_URL*${env.FACEBOOK_AUTHORIZE_URL}*g" /var/lib/jenkins/workspace/crm_pipeline/backend/app.yaml"""
+        sh """sed -i "s*YOUR_FACEBOOK_ACCESS_TOKEN_URL*${env.FACEBOOK_ACCESS_TOKEN_URL}*g" /var/lib/jenkins/workspace/crm_pipeline/backend/app.yaml"""
+        sh """sed -i "s*YOUR_FACEBOOK_USER_INFO_URL*${env.FACEBOOK_USER_INFO_URL}*g" /var/lib/jenkins/workspace/crm_pipeline/backend/app.yaml"""
+        sh "cat /var/lib/jenkins/workspace/crm_pipeline/backend/app.yaml"
+        
+        echo $APPLICATION_CREDENTIALS > .credentials/crm-service-storage-key.json
+      working-directory: ./app
+
+
+
