@@ -10,11 +10,32 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    env:
+      FLASK_APP: main
+      FLASK_ENV: development
+      CONFIG_MODE: 'config.Dev'
+      PYTHONUNBUFFERED: 1
+      GOOGLE_BUCKET_PREFIX: https://storage.googleapis.com/
+      GOOGLE_DISCOVERY_URL: https://accounts.google.com/.well-known/openid-configuration
+      FACEBOOK_AUTHORIZE_URL: https://graph.facebook.com/oauth/authorize
+      FACEBOOK_ACCESS_TOKEN_URL: https://graph.facebook.com/oauth/access_token
+      FACEBOOK_USER_INFO_URL: https://graph.facebook.com/me?fields=email
+      GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID}}
+      GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET}}
+      FACEBOOK_CLIENT_ID: ${{ secrets.FACEBOOK_CLIENT_ID}}
+      FACEBOOK_CLIENT_SECRET:  ${{ secrets.FACEBOOK_CLIENT_SECRET}}
+      GOOGLE_PROJECT: ${{ secrets.GOOGLE_PROJECT}}
+      GOOGLE_BUCKET: ${{ secrets.GOOGLE_BUCKET}}
+      GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS}}
 
     steps:
     - uses: actions/checkout@v1
-    - name: Run a one-line script
-      run: echo Hello, world!
+    - name: Build the docker-compose stack
+      run: docker-compose up -d
+      working-directory: ./development_environment
+    - name: Runnint the tests...
+      run: docker exec -i ${docker-compose ps -q backend} pipenv run python tests.py
+      working-directory: ./development_environment
     - name: Run a multi-line script
       run: |
         echo Add other actions to build,
