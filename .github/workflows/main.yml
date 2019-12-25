@@ -31,6 +31,19 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
+    - name: create .env
+      run: cp env .env
+      working-directory: ./app
+    - name: Change variables
+      run: |
+        sh """sed -i "s*YOUR_DATABASE_URI*${env.DATABASE_URI}*g" /home/runner/work/crm/crm/app/.env"""
+        sh """sed -i "s*YOUR_GOOGLE_CLIENT_ID*${env.GOOGLE_CLIENT_ID}*g" /home/runner/work/crm/crm/app/.env"""
+        sh """sed -i "s*YOUR_GOOGLE_CLIENT_SECRET*${env.GOOGLE_CLIENT_SECRET}*g" /home/runner/work/crm/crm/app/.env"""
+        sh """sed -i "s*YOUR_GOOGLE_APPLICATION_CREDENTIALS*.credentials/crm-service-storage-key.json*g" /home/runner/work/crm/crm/app/.env"""
+        sh """sed -i "s*YOUR_GOOGLE_PROJECT*${env.GOOGLE_PROJECT}*g" /home/runner/work/crm/crm/app/.env"""
+        sh """sed -i "s*YOUR_GOOGLE_BUCKET*${env.GOOGLE_BUCKET}*g" /home/runner/work/crm/crm/app/.env"""
+        sh """sed -i "s*YOUR_FACEBOOK_CLIENT_ID*${env.FACEBOOK_CLIENT_ID}*g" /home/runner/work/crm/crm/app/.env"""
+        sh """sed -i "s*YOUR_FACEBOOK_CLIENT_SECRET*${env.FACEBOOK_CLIENT_SECRET}*g" /home/runner/work/crm/crm/app/.env"""
     - name: Build the docker-compose stack
       run: docker-compose -f docker-compose-cicd.yaml up -d
       working-directory: ./development_environment
