@@ -30,6 +30,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
+    - name: Where am I
+      run: echo $PWD
     - name: Build the docker-compose stack
       run: docker-compose up -d
       working-directory: ./development_environment
