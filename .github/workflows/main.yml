@@ -35,7 +35,7 @@ jobs:
       run: docker-compose -f docker-compose-cicd.yaml up -d
       working-directory: ./development_environment
     - name: Runnint the tests...
-      run: docker exec -i ${docker-compose -f docker-compose-cidd.yaml ps -q backend} pipenv run python tests.py
+      run: docker exec -i ${docker-compose -f docker-compose-cicd.yaml ps -q backend} pipenv run python tests.py
       working-directory: ./development_environment
     - name: Run a multi-line script
       run: |
