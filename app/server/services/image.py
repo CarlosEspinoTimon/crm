@@ -16,16 +16,16 @@ class Image():
 
     def upload(self, data, previous_stored_image=None):
         encoded_image, extension, content_type = self.process_photo_input(data)
-        
+
         if extension not in self.extensions:
             raise Exception("Invalid format, image has to be in jpeg or png")
-        
+
         if previous_stored_image:
             self.delete_image(previous_stored_image)
 
         random_name = ''.join(random.choices(string.ascii_letters +
-            string.digits, k=16))
-        
+                                             string.digits, k=16))
+
         blob = self.bucket.blob(random_name)
         blob.upload_from_string(
             base64.decodebytes(encoded_image.encode()),

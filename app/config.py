@@ -32,6 +32,7 @@ class Config():
         "FACEBOOK_ACCESS_TOKEN_URL", None)
     FACEBOOK_USER_INFO_URL = os.environ.get("FACEBOOK_USER_INFO_URL", None)
 
+
 class Prod(Config):
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URI')
 

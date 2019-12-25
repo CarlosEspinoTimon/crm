@@ -15,10 +15,8 @@ from server.models.user import User
 class TestCustomer(BaseTestClass):
     'Test Customer'
 
-
     def get_token(self):
         return 'Bearer {}'.format(User.query.get(1).generate_auth_token())
-    
 
     def test_create_a_customer(self):
         self.create_user()
@@ -115,7 +113,7 @@ class TestCustomer(BaseTestClass):
         customer = Customer.query.get(1)
         self.assertEqual(customer.name, 'customer2')
         self.assertEqual(customer.surname, 'surname2')
-    
+
     def test_delete_a_customer(self):
         self.create_user()
         self.create_customer()
@@ -174,6 +172,7 @@ class TestCustomer(BaseTestClass):
                 }'''))
         response = dict(data)
         self.assertDictEqual(response, expected_response)
+
 
 if __name__ == '__main__':
     unittest.main()

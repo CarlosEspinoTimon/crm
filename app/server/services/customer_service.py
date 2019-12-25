@@ -51,7 +51,7 @@ def create_customer(data):
 
 def update_customer(data, customer_id):
     customer = Customer.query.get(customer_id)
-    if customer and customer.is_deleted == False:
+    if customer and not customer.is_deleted:
         fields_to_update = ['name', 'surname']
         for field in fields_to_update:
             if field in data:

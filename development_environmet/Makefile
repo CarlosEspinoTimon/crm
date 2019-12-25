@@ -45,3 +45,17 @@ debug-backend:
 documentation:
 	# docker exec $(backend) /bin/sh -c 'cd docs && pipenv run sphinx-apidoc -o . ../server/ -M --ext-autodoc -f && pipenv run make clean && pipenv run make html'
 	docker exec $(backend) /bin/sh -c 'cd docs && pipenv run sphinx-apidoc -o . ../server/ --ext-autodoc && pipenv run make clean && pipenv run make html'
+
+
+# Code style
+code-style-verbose:
+	docker exec $(backend) /bin/sh -c 'find ./ -not -path "./docs*" -not -path "./migrations*" -iname "*.py" | xargs pipenv run pycodestyle --verbose'
+
+# Code style
+code-style:
+	docker exec $(backend) /bin/sh -c 'find ./ -not -path "./docs*" -not -path "./migrations*" -iname "*.py" | xargs pipenv run pycodestyle --quiet'
+
+# Code style
+code-style-fix:
+	docker run -v $(shell pwd)/../app/:/tmp/code webpp/codestyle -i /tmp/code -x '/tmp/code/docs' '/tmp/code/migrations'
+
