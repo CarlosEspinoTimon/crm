@@ -13,7 +13,7 @@ jobs:
     env:
       FLASK_APP: main
       FLASK_ENV: development
-      CONFIG_MODE: 'config.Dev'
+      CONFIG_MODE: 'config.Test'
       PYTHONUNBUFFERED: 1
       GOOGLE_BUCKET_PREFIX: https://storage.googleapis.com/
       GOOGLE_DISCOVERY_URL: https://accounts.google.com/.well-known/openid-configuration
