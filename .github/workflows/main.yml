@@ -34,9 +34,6 @@ jobs:
       run: echo $PWD
     - name: CATTT
       run: cat /home/runner/work/crm/crm/app/../development_environment/Dockerfile
-    - name: tree
-      run: tree .
-      working-directory: /home/runner/work/crm/crm
     - name: Build the docker-compose stack
       run: docker-compose up -d
       working-directory: ./development_environment
