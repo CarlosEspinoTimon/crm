@@ -2,7 +2,7 @@ backend=$(shell docker-compose ps -q backend)
 
 # Initial Configuration
 setup-environment:
-	./create_env.sh 
+	(./create_env.sh && git config core.hooksPath .githooks)
 
 # Access backend
 access-backend:
