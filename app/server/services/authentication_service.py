@@ -6,6 +6,7 @@ from oauthlib.oauth2 import WebApplicationClient
 
 from ..models.user import User
 
+
 def basic_login():
     try:
         email = request.headers['email']
@@ -108,7 +109,8 @@ class GoogleSignIn(OAuthSignIn):
         if userinfo_response.json().get("email_verified"):
             user_email = userinfo_response.json()["email"]
         else:
-            return jsonify("User email not available or not verified by Google."), 400
+            return jsonify(
+                "User email not available or not verified by Google."), 400
 
         return super().check_for_user_in_database(user_email)
 

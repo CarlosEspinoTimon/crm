@@ -24,6 +24,7 @@ pyopenssl = "*"
 sphinx = "*"
 sphinx-rtd-theme = "*"
 sphinxcontrib-httpdomain = "*"
+pycodestyle = "*"
 
 [requires]
 python_version = "3.7"

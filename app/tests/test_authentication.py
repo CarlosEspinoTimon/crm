@@ -3,7 +3,6 @@
 
 import unittest
 import json
-from datetime import datetime
 
 import pathmagic
 
@@ -15,7 +14,7 @@ class TestAuthentication(BaseTestClass):
 
     def test_login(self):
         self.create_user()
-        
+
         res = self.tester_app.post(
             '/login',
             headers={
@@ -26,8 +25,6 @@ class TestAuthentication(BaseTestClass):
         self.assertEqual(res.status_code, 200)
         data = json.loads(res.get_data(as_text=True))
         self.assertTrue('Token: ' in data)
-
-    
 
 
 if __name__ == '__main__':

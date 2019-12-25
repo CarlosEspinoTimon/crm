@@ -3,9 +3,11 @@ from flask import current_app as app
 from time import time
 from werkzeug.security import generate_password_hash, check_password_hash
 import jwt
-from marshmallow import Schema, fields
+from marshmallow import Schema
+from marshmallow import fields
 
-from server import db, ma
+from server import db
+from server import ma
 
 
 class User(db.Model):

@@ -8,6 +8,7 @@ import pathmagic
 
 from base import BaseTestClass
 
+
 class Server(BaseTestClass):
     'Test server'
 
