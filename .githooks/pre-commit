@@ -1,3 +1,4 @@
+#!/bin/sh
 echo "Skip pre-commit hooks with --no-verify (not recommended).\n" 
 
 (cd development_environment && make backend-tests)
