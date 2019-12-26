@@ -28,7 +28,6 @@ def create_customer(data):
     if not customer:
         photo_url = None
         if 'photo' in data:
-            # TODO init class just once
             image = Image()
             photo_url = image.upload(data)
         customer = Customer(
@@ -57,7 +56,6 @@ def update_customer(data, customer_id):
             if field in data:
                 setattr(customer, field, data[field])
         if 'photo' in data:
-            # TODO init class just once
             image = Image()
             photo_url = image.upload(data, customer.photo_url)
             customer.photo_url = photo_url
