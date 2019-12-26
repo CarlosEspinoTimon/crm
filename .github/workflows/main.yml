@@ -36,7 +36,7 @@ jobs:
       working-directory: ./app
     - name: Change variables
       run: |
-        sh """sed -i "s*YOUR_DATABASE_URI*${DATABASE_URI}*g" /home/runner/work/crm/crm/app/.env"""
+        sh """sed -i "s*YOUR_DATABASE_URI*${{ secrets.DATABASE_URI}}*g" /home/runner/work/crm/crm/app/.env"""
         sh """sed -i "s*YOUR_GOOGLE_CLIENT_ID*${GOOGLE_CLIENT_ID}*g" /home/runner/work/crm/crm/app/.env"""
         sh """sed -i "s*YOUR_GOOGLE_CLIENT_SECRET*${GOOGLE_CLIENT_SECRET}*g" /home/runner/work/crm/crm/app/.env"""
         sh """sed -i "s*YOUR_GOOGLE_APPLICATION_CREDENTIALS*.credentials/crm-service-storage-key.json*g" /home/runner/work/crm/crm/app/.env"""
