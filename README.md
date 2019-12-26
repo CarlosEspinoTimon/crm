@@ -134,6 +134,18 @@ The test are run in a test database, to run them you can just execute (from the 
 
 `make backend-tests`
 
+### __Create a User to interact with the API__
+
+To access the Customer endpoints you need to have a register user. There is a Python script in the `app` directory called `create_user.py`, that recieves the email and password as params, it encrypts the password and insert the record in the database. You can execute the script within the container (modules required are already installed). To access you can execute(from the `development_environmet` directory):
+
+`make access-backend`
+
+Once in there you can run:
+
+`pipenv run python create_user.py YOUR_EMAIL YOUR_PASSWORD`
+
+After that you can log in the system.
+
 ## __Working in the project__
 ------------------------------
 
