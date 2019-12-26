@@ -2,6 +2,7 @@ import sys
 import pymysql
 from werkzeug.security import generate_password_hash
 
+
 def create_user(email, password):
     try:
         connection = pymysql.connect(

@@ -27,14 +27,7 @@ class BaseTestClass(unittest.TestCase):
 
     user = {
         'email': 'user@email.com',
-        'name': 'user',
-        'surname': 'surname',
-        'created_by': 1,
-        'modified_by': 1,
-        'created_at': datetime.now(),
-        'modified_at': datetime.now(),
-        'password_hash': '1234',
-        'is_deleted': False,
+        'password_hash': '1234'
     }
 
     def setUp(self):
@@ -73,14 +66,7 @@ class BaseTestClass(unittest.TestCase):
         Function that presists a User in the database for the test
         '''
         user = User(
-            email=data['email'],
-            name=data['name'],
-            surname=data['surname'],
-            created_by=data['created_by'],
-            modified_by=data['modified_by'],
-            created_at=data['created_at'],
-            modified_at=data['modified_at'],
-            is_deleted=data['is_deleted'],
+            email=data['email']
         )
         user.set_password('1234')
         db.session.add(user)
