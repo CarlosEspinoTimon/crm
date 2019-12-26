@@ -103,6 +103,7 @@ celerybeat.pid
 
 # Environments
 .env
+.env.copy
 .venv
 env/
 venv/
@@ -127,3 +128,13 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Ignore credentials folder
+.credentials/
+
+# Ignore real_app.yaml
+real_app.yaml
+
+# Sphinx documentation
+# /app/docs/_build/
+/app/docs/_build/doctrees/
