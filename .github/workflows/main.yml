@@ -10,30 +10,29 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    env:
-      FLASK_APP: main
-      FLASK_ENV: development
-      CONFIG_MODE: 'config.Test'
-      PYTHONUNBUFFERED: 1
-      GOOGLE_BUCKET_PREFIX: https://storage.googleapis.com/
-      GOOGLE_DISCOVERY_URL: https://accounts.google.com/.well-known/openid-configuration
-      FACEBOOK_AUTHORIZE_URL: https://graph.facebook.com/oauth/authorize
-      FACEBOOK_ACCESS_TOKEN_URL: https://graph.facebook.com/oauth/access_token
-      FACEBOOK_USER_INFO_URL: https://graph.facebook.com/me?fields=email
-      GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID}}
-      GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET}}
-      FACEBOOK_CLIENT_ID: ${{ secrets.FACEBOOK_CLIENT_ID}}
-      FACEBOOK_CLIENT_SECRET:  ${{ secrets.FACEBOOK_CLIENT_SECRET}}
-      GOOGLE_PROJECT: ${{ secrets.GOOGLE_PROJECT}}
-      GOOGLE_BUCKET: ${{ secrets.GOOGLE_BUCKET}}
-      GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS}}
-      DATABASE_URI: ${{ secrets.DATABASE_URI}}
+    # env:
+    #   FLASK_APP: main
+    #   FLASK_ENV: development
+    #   CONFIG_MODE: 'config.Test'
+    #   PYTHONUNBUFFERED: 1
+    #   GOOGLE_BUCKET_PREFIX: https://storage.googleapis.com/
+    #   GOOGLE_DISCOVERY_URL: https://accounts.google.com/.well-known/openid-configuration
+    #   FACEBOOK_AUTHORIZE_URL: https://graph.facebook.com/oauth/authorize
+    #   FACEBOOK_ACCESS_TOKEN_URL: https://graph.facebook.com/oauth/access_token
+    #   FACEBOOK_USER_INFO_URL: https://graph.facebook.com/me?fields=email
+    #   GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID}}
+    #   GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET}}
+    #   FACEBOOK_CLIENT_ID: ${{ secrets.FACEBOOK_CLIENT_ID}}
+    #   FACEBOOK_CLIENT_SECRET:  ${{ secrets.FACEBOOK_CLIENT_SECRET}}
+    #   GOOGLE_PROJECT: ${{ secrets.GOOGLE_PROJECT}}
+    #   GOOGLE_BUCKET: ${{ secrets.GOOGLE_BUCKET}}
+    #   GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS}}
+    #   DATABASE_URI: ${{ secrets.DATABASE_URI}}
 
     steps:
     - uses: actions/checkout@v1
     - name: get variables
-      run: |
-        echo ${{secrets.GOOGLE_BUCKET}}
+      run: echo ${{secrets.GOOGLE_BUCKET}}
         
     - name: create .env
       run: cp env .env
