@@ -32,7 +32,9 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: get variables
-      run: echo ${{secrets.GOOGLE_BUCKET}}
+      env: 
+        A: ${{secrets.GOOGLE_BUCKET}}
+      run: echo "AAAA ${A}"
         
     - name: create .env
       run: cp env .env
