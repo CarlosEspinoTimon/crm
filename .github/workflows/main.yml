@@ -31,6 +31,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
+    - name: get variables
+      run: |
+        echo $GOOGLE_BUCKET
+        echo ${GOOGLE_BUCKET}
+        echo ${{env.GOOGLE_BUCKET}}
     - name: create .env
       run: cp env .env
       working-directory: ./app
