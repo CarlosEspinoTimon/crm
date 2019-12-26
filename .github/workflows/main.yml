@@ -32,11 +32,11 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: get variables
+      run: echo "AAAA ${super_secret}"
       with: # Set the secret as an input
         super_secret: ${{ secrets.GOOGLE_BUCKET }}
       env: # Or as an environment variable
         super_secret: ${{ secrets.GOOGLE_BUCKET }}
-      run: echo "AAAA ${super_secret}"
         
     - name: create .env
       run: cp env .env
