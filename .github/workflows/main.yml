@@ -32,6 +32,8 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: get variables
+      env: 
+        GOOGLE_BUCKET: ${{ secrets.GOOGLE_BUCKET}}
       run: |
         echo $GOOGLE_BUCKET
         echo ${GOOGLE_BUCKET}
