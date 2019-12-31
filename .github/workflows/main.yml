@@ -10,6 +10,7 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    uses: actions/checkout@v1
     env:
       FLASK_APP: main
     #   FLASK_ENV: development
@@ -37,7 +38,7 @@ jobs:
         super_secret: yeeeeey
         # super_secret: ${{ secrets.GOOGLE_BUCKET }}
     
-    - uses: actions/checkout@v1    
+    # - uses: actions/checkout@v1    
     - name: create .env
       # run: cp env .env
       run: ls
