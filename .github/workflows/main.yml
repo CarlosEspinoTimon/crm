@@ -81,12 +81,12 @@ jobs:
     - name: Run deployment
       # if: success()
       uses: actions/gcloud/cli@master
+      working-directory: ./app
       env:
         CLOUDSDK_CORE_PROJECT: ${{ secrets.GOOGLE_PROJECT }}
       with:
         entrypoint: gcloud
         args: app deploy ./app.yaml --quiet
-        working-directory: ./app
 
 
 
