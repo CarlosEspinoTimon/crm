@@ -2,7 +2,7 @@ backend=$(shell docker-compose ps -q backend)
 
 # Initial Configuration
 setup-environment:
-	(./create_env.sh && git config core.hooksPath .githooks)
+	(./create_env.sh && git config core.hooksPath .githooks && sed -i "s*YOUR_DATABASE_TEST_URI*mysql://user:password@db_test/test_db*" ../app/.env)
 
 # Access backend
 access-backend:
