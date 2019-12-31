@@ -10,8 +10,8 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    # env:
-    #   FLASK_APP: main
+    env:
+      FLASK_APP: main
     #   FLASK_ENV: development
     #   CONFIG_MODE: 'config.Test'
     #   PYTHONUNBUFFERED: 1
@@ -32,13 +32,13 @@ jobs:
     steps:
     # - uses: actions/checkout@v1
     - name: get variables
-      run: echo "AAAA ${super_secret} vale"
+      run: echo "AAAA ${super_secret} vale y flask app ${FLASK_APP}"
       env: # Or as an environment variable
         super_secret: yeeeeey
         # super_secret: ${{ secrets.GOOGLE_BUCKET }}
         
     - name: create .env
-      run: cp env .env
+      # run: cp env .env
       run: ls
       working-directory: ./app
     - name: Change variables
