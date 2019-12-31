@@ -38,6 +38,7 @@ jobs:
         # super_secret: ${{ secrets.GOOGLE_BUCKET }}
     
     - name: replace
+      uses: frabert/replace-string-action@v1.1
       with:
         pattern: 'Hello, (\w+)!'
         string: 'Hello, world!'
