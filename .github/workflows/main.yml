@@ -38,7 +38,7 @@ jobs:
         # super_secret: ${{ secrets.GOOGLE_BUCKET }}
     
     - name: create .env
-      run: ls
+      run: cp env .env
       working-directory: ./app
     - name: Print file 1
       run: |
