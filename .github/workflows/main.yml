@@ -10,7 +10,6 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    uses: actions/checkout@v1
     env:
       FLASK_APP: main
     #   FLASK_ENV: development
@@ -31,7 +30,7 @@ jobs:
     #   DATABASE_URI: ${{ secrets.DATABASE_URI}}
 
     steps:
-    # - uses: actions/checkout@v1
+    - uses: actions/checkout@v1
     - name: get variables
       run: echo "AAAA ${super_secret} vale y flask app ${FLASK_APP}"
       env: # Or as an environment variable
