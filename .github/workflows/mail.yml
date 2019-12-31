@@ -3,7 +3,8 @@ name: CI
 on:
   push:
     branches:
-      - feature/cicd
+      - develop
+      - 'feature/**'
 
 
 jobs:
@@ -71,28 +72,10 @@ jobs:
         pipenv install
       working-directory: ./app
 
-    - name: Setting up GCloud Auth
-      uses: actions/gcloud/auth@master
-      env:
-        GCLOUD_AUTH: ${{ secrets.GCLOUD_AUTH }}
-
     - name: Run the tests
       run: pipenv run python tests/tests.py
       working-directory: ./app
 
-    - name: Change variables in app.yaml
-      run: |
-        sh ../deployment_automation/replace_variables.sh app.yaml
-      working-directory: ./app
-      
-    - name: Run deployment
-      if: success()
-      uses: actions/gcloud/cli@master
-      env:
-        CLOUDSDK_CORE_PROJECT: ${{ secrets.GOOGLE_PROJECT }}
-      with:
-        entrypoint: gcloud
-        args: app deploy ./app/app.yaml --quiet
 
 
 
