@@ -90,6 +90,7 @@ jobs:
       with:
         entrypoint: gcloud
         args: app deploy ./app.yaml --quiet
+      working-directory: ./app
 
 
 
