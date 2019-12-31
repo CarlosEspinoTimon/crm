@@ -8,6 +8,7 @@ services:
         username: "nonroot"
     ports:
      - "5000:5000"
+     - "3306:3306"
     depends_on:
       - db_test
     volumes:
@@ -38,5 +39,4 @@ networks:
       driver: default
 
 volumes:
-  crm_db:
   crm_test_db:
