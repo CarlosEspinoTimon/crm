@@ -42,12 +42,6 @@ jobs:
       DATABASE_TEST_URI: 'mysql://root:password@127.0.0.1:3307/test_db'
 
     steps:
-    - name: LS
-      run: ls
-    - name: LS in /home/runner/work/crm/crm
-      run: ls /home/runner/work/crm/crm
-    - name: LS in /home/runner/work/crm/crm/app
-      run: ls /home/runner/work/crm/crm/app
     - name: Retreiving the repo
       uses: actions/checkout@v1
     # - name: Set up Python 
@@ -93,7 +87,7 @@ jobs:
         CLOUDSDK_CORE_PROJECT: ${{ secrets.GOOGLE_PROJECT }}
       with:
         entrypoint: gcloud
-        args: app deploy /github/workspace/app/app.yaml --quiet
+        args: app deploy ./app/app.yaml --quiet
 
 
 
