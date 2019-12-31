@@ -43,6 +43,7 @@ jobs:
     - name: Print file 1
       run: |
         cat app.yaml
+      working-directory: ./app
     - name: Change variables
       run: |
         sh ../deployment_automation/replace_variables.sh app.yaml
