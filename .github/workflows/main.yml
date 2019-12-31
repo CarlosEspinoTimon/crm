@@ -30,9 +30,9 @@ jobs:
     #   DATABASE_URI: ${{ secrets.DATABASE_URI}}
 
     steps:
-    - uses: actions/checkout@v1
+    # - uses: actions/checkout@v1
     - name: get variables
-      run: echo "AAAA ${super_secret}"
+      run: echo "AAAA ${super_secret} vale"
       env: # Or as an environment variable
         super_secret: ${{ secrets.GOOGLE_BUCKET }}
         
