@@ -83,13 +83,13 @@ jobs:
         sh ../deployment_automation/replace_variables.sh app.yaml
       working-directory: ./app
     - name: Run deployment
-        if: success()
-        uses: actions/gcloud/cli@master
-        env:
-          CLOUDSDK_CORE_PROJECT: YOUR_GCP_PROJECT_NAME
-        with:
-          entrypoint: gcloud
-          args: app deploy ./app.yaml --quiet
+      if: success()
+      uses: actions/gcloud/cli@master
+      env:
+        CLOUDSDK_CORE_PROJECT: GOOGLE_PROJECT
+      with:
+        entrypoint: gcloud
+        args: app deploy ./app.yaml --quiet
 
 
 
