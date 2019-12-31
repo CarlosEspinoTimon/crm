@@ -10,9 +10,6 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: [2.7, 3.5, 3.6, 3.7, 3.8]
     services:
       db_test:
         image: mysql:5.7
@@ -46,13 +43,17 @@ jobs:
     steps:
     - name: Retreiving the repo
       uses: actions/checkout@v1
-    - name: Set up Python ${{ matrix.python-version }}
+    - name: Set up Python 
       uses: actions/setup-python@v1
       with:
-        python-version: ${{ matrix.python-version }}
+        python-version: '3.7'
     # You can test your matrix by printing the current Python version
-    - name: Display Python version
-      run: python -c "import sys; print(sys.version)"
+    - name: Install dependencies
+      run: |
+        python -m pip3 install --upgrade pip3
+        pip3 install pipenv
+        pipenv install 
+
     # - name: Setting up GCloud Auth
     #     uses: actions/gcloud/auth@master
     #     env:
