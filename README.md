@@ -104,6 +104,8 @@ DATABASE_URI=YOUR_MYSQL_URI
 # Bucket variables
 GOOGLE_PROJECT=YOUR_GOOGLE_PROJECT
 GOOGLE_BUCKET=YOUR_GOOGLE_BUCKET
+
+DATABASE_TEST_URI=mysql://user:password@db_test/test_db
 ```
 
 If you run `make setup-environment` from the `development_environmet` directory you will get a file like this one. Then, you just have to change the values in the `#USER DEFINED VARIABLES` section.
@@ -221,13 +223,16 @@ If you want to see the documentation without doing any commit you can run (from 
 
 ### __Automated deployment__
 
-This repository is integrated within a CI/CD jenkins pipeline. This pipeline builds the environment for the tests and runs them, also, when changes are made in the master branch it deploys the code to App Engine Flexible.
+This repository has two Github Action pipeline configured, one for the master branch that at the end, if tests are passed, it deploys the code to App Engine Flex, an another for the rests of the branches that just run all the tests to check whether something has been broken or not.
+
 ### __Manual deployment__
 
 This server is prepared to be deployed in Google App Engine Flexible, if you wish to deploy it manually, you need to configure the `app.yaml` file and generate the latest `requirements.txt`.
+
 #### __Configure app.yaml__
 
 In the repository there is an `app.yaml` example, in this file you have to change the environment variables for the real ones. For security, to avoid uploading credentials to the repository, you should create a copy of the file and call it `real_app.yaml` which is already in the .gitignore, put the real environment variables there and deploy it with this file.
+
 #### __Generate requirements.txt__
 
 To generate the latest `requirements.txt`, you have to get into the container:
@@ -240,7 +245,6 @@ and generate the file:
 
 it is also needed the gunicorn module:
 
-`echo "gunicorn==19.9.0" >> requirements.txt`
 `echo "gunicorn==20.0.4" >> requirements.txt`
 
 we have to remove the first line created by the pipenv lock -r
@@ -248,6 +252,7 @@ we have to remove the first line created by the pipenv lock -r
 `echo "$(tail -n +2 requirements.txt)" > requirements.txt`
 
 This file will be created inside the container and in the folder shared with the host.
+
 #### __Deploy it__
 
 Once you have it, you can deploy the app by running: `gcloud app deploy real_app.yaml` in the `app` directory. Beware that you have to have [initiated the cloud SDK](https://cloud.google.com/sdk/docs/initializing "Initializing Cloud SDK")

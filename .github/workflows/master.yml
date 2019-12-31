@@ -87,7 +87,14 @@ jobs:
       run: |
         sh ../deployment_automation/replace_variables.sh app.yaml
       working-directory: ./app
-      
+
+    - name: Generate requirements.txt
+      run: |
+        pipenv lock -r >  requirements.txt
+        echo "gunicorn==20.0.4" >> requirements.txt
+        echo "$(tail -n +2 requirements.txt)" > requirements.txt
+      working-directory: ./app
+
     - name: Run deployment
       if: success()
       uses: actions/gcloud/cli@master
