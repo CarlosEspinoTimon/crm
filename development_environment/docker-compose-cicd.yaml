@@ -9,34 +9,34 @@ services:
     ports:
      - "5000:5000"
      - "3306:3306"
-    depends_on:
-      - db_test
+    # depends_on:
+    #   - db_test
     volumes:
       - ../app:/app
-    networks:
-      - crm
+    # networks:
+    #   - crm
     command: pipenv run flask run --host=0.0.0.0 --cert=adhoc
-  db_test:
-    image: mysql:5.7
-    environment:
-      MYSQL_DATABASE: 'test_db'
-      MYSQL_USER: 'user'
-      MYSQL_PASSWORD: 'password'
-      MYSQL_ROOT_PASSWORD: 'root_super_password'
-    ports:
-      - '3307:3306'
-    volumes:
-      - crm_test_db:/var/lib/mysql
-    networks:
-      - crm
+  # db_test:
+  #   image: mysql:5.7
+  #   environment:
+  #     MYSQL_DATABASE: 'test_db'
+  #     MYSQL_USER: 'user'
+  #     MYSQL_PASSWORD: 'password'
+  #     MYSQL_ROOT_PASSWORD: 'root_super_password'
+  #   ports:
+  #     - '3307:3306'
+  #   volumes:
+  #     - crm_test_db:/var/lib/mysql
+  #   networks:
+  #     - crm
     
     
-networks:
-  crm:
-    name: crm
-    driver: bridge
-    ipam:
-      driver: default
+# networks:
+#   crm:
+#     name: crm
+#     driver: bridge
+#     ipam:
+#       driver: default
 
-volumes:
-  crm_test_db:
+# volumes:
+#   crm_test_db:
