@@ -93,7 +93,7 @@ jobs:
         CLOUDSDK_CORE_PROJECT: ${{ secrets.GOOGLE_PROJECT }}
       with:
         entrypoint: gcloud
-        args: app deploy /home/runner/work/crm/crm/app/app.yaml --quiet
+        args: app deploy /github/workspace/app/app.yaml --quiet
 
 
 
