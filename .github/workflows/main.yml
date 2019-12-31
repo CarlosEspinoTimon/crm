@@ -86,7 +86,7 @@ jobs:
       if: success()
       uses: actions/gcloud/cli@master
       env:
-        CLOUDSDK_CORE_PROJECT: GOOGLE_PROJECT
+        CLOUDSDK_CORE_PROJECT: ${{ secrets.GOOGLE_PROJECT }}
       with:
         entrypoint: gcloud
         args: app deploy ./app.yaml --quiet
