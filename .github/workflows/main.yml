@@ -39,6 +39,7 @@ jobs:
         
     - name: create .env
       run: cp env .env
+      run: ls
       working-directory: ./app
     - name: Change variables
       env:
