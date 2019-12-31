@@ -31,26 +31,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: get variables
-      run: echo "AAAA ${super_secret} vale y flask app ${FLASK_APP}"
-      env: # Or as an environment variable
-        super_secret: yeeeeey
-        # super_secret: ${{ secrets.GOOGLE_BUCKET }}
-    
-    - name: create .env
+    - name: create .env file
       run: cp env .env
-      working-directory: ./app
-    - name: Print file 1
-      run: |
-        cat .env
       working-directory: ./app
     - name: Change variables in .env
       run: |
         sh ../deployment_automation/replace_variables.sh .env
-      working-directory: ./app
-    - name: Print file 2
-      run: |
-        cat .env
       working-directory: ./app
     - name: Build the docker-compose stack
       run: docker-compose -f docker-compose-cicd.yaml up -d
@@ -60,29 +46,15 @@ jobs:
     - name: Docker ps
       run: docker ps
     - name: Runnint the tests...
-      run: docker exec -i "$(docker-compose -f docker-compose-cicd.yaml ps -q backend)" pipenv run python tests.py
+      run: docker exec -i "$(docker-compose -f docker-compose-cicd.yaml ps -q backend)" pipenv run python tests/tests.py
       working-directory: ./development_environment
     - name: Run a multi-line script
       run: |
         echo Add other actions to build,
         echo test, and deploy your project.
-    - name: Modify app.yml
+    - name: Change variables in app.yaml
       run: |
-        sh """sed -i "s*YOUR_DATABASE_URI*${env.DATABASE_URI}*g" /home/runner/work/crm/crm/app/app.yaml"""
-        sh """sed -i "s*YOUR_GOOGLE_CLIENT_ID*${env.GOOGLE_CLIENT_ID}*g" /home/runner/work/crm/crm/app/app.yaml"""
-        sh """sed -i "s*YOUR_GOOGLE_CLIENT_SECRET*${env.GOOGLE_CLIENT_SECRET}*g" /home/runner/work/crm/crm/app/app.yaml"""
-        sh """sed -i "s*YOUR_GOOGLE_APPLICATION_CREDENTIALS*.credentials/crm-service-storage-key.json*g" /home/runner/work/crm/crm/app/app.yaml"""
-        sh """sed -i "s*YOUR_GOOGLE_PROJECT*${env.GOOGLE_PROJECT}*g" /home/runner/work/crm/crm/app/app.yaml"""
-        sh """sed -i "s*YOUR_GOOGLE_BUCKET*${env.GOOGLE_BUCKET}*g" /home/runner/work/crm/crm/app/app.yaml"""
-        sh """sed -i "s*YOUR_GOOGLE_DISCOVERY_URL*${env.GOOGLE_DISCOVERY_URL}*g" /home/runner/work/crm/crm/app/app.yaml"""
-        sh """sed -i "s*YOUR_FACEBOOK_CLIENT_ID*${env.FACEBOOK_CLIENT_ID}*g" /home/runner/work/crm/crm/app/app.yaml"""
-        sh """sed -i "s*YOUR_FACEBOOK_CLIENT_SECRET*${env.FACEBOOK_CLIENT_SECRET}*g" /home/runner/work/crm/crm/app/app.yaml"""
-        sh """sed -i "s*YOUR_FACEBOOK_AUTHORIZE_URL*${env.FACEBOOK_AUTHORIZE_URL}*g" /home/runner/work/crm/crm/app/app.yaml"""
-        sh """sed -i "s*YOUR_FACEBOOK_ACCESS_TOKEN_URL*${env.FACEBOOK_ACCESS_TOKEN_URL}*g" /home/runner/work/crm/crm/app/app.yaml"""
-        sh """sed -i "s*YOUR_FACEBOOK_USER_INFO_URL*${env.FACEBOOK_USER_INFO_URL}*g" /home/runner/work/crm/crm/app/app.yaml"""
-        sh "cat /home/runner/work/crm/crm/app/app.yaml"
-        
-        echo $APPLICATION_CREDENTIALS > .credentials/crm-service-storage-key.json
+        sh ../deployment_automation/replace_variables.sh app.yaml
       working-directory: ./app
 
 
