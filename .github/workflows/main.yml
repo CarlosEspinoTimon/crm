@@ -34,7 +34,8 @@ jobs:
     - name: get variables
       run: echo "AAAA ${super_secret} vale"
       env: # Or as an environment variable
-        super_secret: ${{ secrets.GOOGLE_BUCKET }}
+        super_secret: yeeeeey
+        # super_secret: ${{ secrets.GOOGLE_BUCKET }}
         
     - name: create .env
       run: cp env .env
