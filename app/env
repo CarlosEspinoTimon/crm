@@ -24,8 +24,6 @@ FACEBOOK_USER_INFO_URL=https://graph.facebook.com/me?fields=email
 # Production database URI
 DATABASE_URI=YOUR_DATABASE_URI
 
-
-
 # User defined Oauth variables
 GOOGLE_CLIENT_ID=YOUR_GOOGLE_CLIENT_ID
 GOOGLE_CLIENT_SECRET=YOUR_GOOGLE_CLIENT_SECRET

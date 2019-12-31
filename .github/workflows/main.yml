@@ -46,7 +46,7 @@ jobs:
       working-directory: ./app
     - name: Change variables in .env
       run: |
-        sh ../deployment_automation/replace_variables.sh cat .env
+        sh ../deployment_automation/replace_variables.sh .env
       working-directory: ./app
     - name: Print file 2
       run: |
