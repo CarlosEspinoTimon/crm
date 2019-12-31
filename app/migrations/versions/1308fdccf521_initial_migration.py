@@ -1,8 +1,8 @@
-"""Create User and Customer entities
+"""Initial migration
 
-Revision ID: eabc93984805
+Revision ID: 1308fdccf521
 Revises: 
-Create Date: 2019-12-20 05:49:36.427667
+Create Date: 2019-12-26 08:47:13.188381
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'eabc93984805'
+revision = '1308fdccf521'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -21,24 +21,10 @@ def upgrade():
     op.create_table('users',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('email', sa.String(length=120), nullable=True),
-    sa.Column('name', sa.String(length=120), nullable=False),
-    sa.Column('surname', sa.String(length=120), nullable=False),
-    sa.Column('created_at', sa.DateTime(), nullable=True),
-    sa.Column('modified_at', sa.DateTime(), nullable=True),
-    sa.Column('created_by', sa.Integer(), nullable=True),
-    sa.Column('modified_by', sa.Integer(), nullable=True),
     sa.Column('password_hash', sa.String(length=128), nullable=True),
-    sa.Column('is_deleted', sa.Boolean(), nullable=False),
-    sa.ForeignKeyConstraint(['created_by'], ['users.id'], ),
-    sa.ForeignKeyConstraint(['modified_by'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
-    op.create_index(op.f('ix_users_created_at'), 'users', ['created_at'], unique=False)
     op.create_index(op.f('ix_users_email'), 'users', ['email'], unique=True)
-    op.create_index(op.f('ix_users_is_deleted'), 'users', ['is_deleted'], unique=False)
-    op.create_index(op.f('ix_users_modified_at'), 'users', ['modified_at'], unique=False)
-    op.create_index(op.f('ix_users_name'), 'users', ['name'], unique=False)
-    op.create_index(op.f('ix_users_surname'), 'users', ['surname'], unique=False)
     op.create_table('customers',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('email', sa.String(length=120), nullable=False),
@@ -74,11 +60,6 @@ def downgrade():
     op.drop_index(op.f('ix_customers_email'), table_name='customers')
     op.drop_index(op.f('ix_customers_created_at'), table_name='customers')
     op.drop_table('customers')
-    op.drop_index(op.f('ix_users_surname'), table_name='users')
-    op.drop_index(op.f('ix_users_name'), table_name='users')
-    op.drop_index(op.f('ix_users_modified_at'), table_name='users')
-    op.drop_index(op.f('ix_users_is_deleted'), table_name='users')
     op.drop_index(op.f('ix_users_email'), table_name='users')
-    op.drop_index(op.f('ix_users_created_at'), table_name='users')
     op.drop_table('users')
     # ### end Alembic commands ###
