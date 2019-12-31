@@ -30,7 +30,12 @@ jobs:
       DATABASE_URI: ${{ secrets.DATABASE_URI}}
 
     steps:
+    - name: Retreiving the repo
     - uses: actions/checkout@v1
+    # - name: Setting up GCloud Auth
+    #     uses: actions/gcloud/auth@master
+    #     env:
+    #       GCLOUD_AUTH: ${{ secrets.GCLOUD_AUTH }}
     - name: create .env file
       run: cp env .env
       working-directory: ./app
@@ -56,6 +61,14 @@ jobs:
       run: |
         sh ../deployment_automation/replace_variables.sh app.yaml
       working-directory: ./app
+    # - name: Run deployment
+    #     if: success()
+    #     uses: actions/gcloud/cli@master
+    #     env:
+    #       CLOUDSDK_CORE_PROJECT: YOUR_GCP_PROJECT_NAME
+    #     with:
+    #       entrypoint: gcloud
+    #       args: app deploy ./app.yaml --quiet
 
 
 

@@ -44,4 +44,4 @@ class Dev(Config):
 
 class Test(Config):
     TESTING = True
-    SQLALCHEMY_DATABASE_URI = 'mysql://user:password@db_test/test_db'
+    SQLALCHEMY_DATABASE_URI = 'mysql://root:root_super_password@db_test/test_db'
