@@ -42,15 +42,15 @@ jobs:
       working-directory: ./app
     - name: Print file 1
       run: |
-        cat app.yaml
+        cat .env
       working-directory: ./app
-    - name: Change variables
+    - name: Change variables in .env
       run: |
-        sh ../deployment_automation/replace_variables.sh app.yaml
+        sh ../deployment_automation/replace_variables.sh cat .env
       working-directory: ./app
     - name: Print file 2
       run: |
-        cat app.yaml
+        cat .env
       working-directory: ./app
     - name: Build the docker-compose stack
       run: docker-compose -f docker-compose-cicd.yaml up -d
