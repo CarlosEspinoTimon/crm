@@ -39,7 +39,7 @@ jobs:
       GOOGLE_BUCKET: ${{ secrets.GOOGLE_BUCKET}}
       GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS}}
       DATABASE_URI: ${{ secrets.DATABASE_URI}}
-      DATABASE_TEST_URI: mysql://root:password@127.0.0.1:3307/test_db
+      DATABASE_TEST_URI: 'mysql://root:password@127.0.0.1:3307/test_db'
 
     steps:
     - name: Retreiving the repo
