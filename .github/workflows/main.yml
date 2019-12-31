@@ -50,8 +50,8 @@ jobs:
     # You can test your matrix by printing the current Python version
     - name: Install dependencies
       run: |
-        python -m pip3 install --upgrade pip3
-        pip3 install pipenv
+        python -m pip install --upgrade pip
+        pip install pipenv
         pipenv install 
 
     # - name: Setting up GCloud Auth
@@ -65,16 +65,19 @@ jobs:
       run: |
         sh ../deployment_automation/replace_variables.sh .env
       working-directory: ./app
-    - name: Build the docker-compose stack
-      run: docker-compose -f docker-compose-cicd.yaml up -d
-      working-directory: ./development_environment
-    - name: Docker info
-      run: docker info
-    - name: Docker ps
-      run: docker ps
-    - name: Runnint the tests...
-      run: docker exec -i "$(docker-compose -f docker-compose-cicd.yaml ps -q backend)" pipenv run python tests/tests.py
-      working-directory: ./development_environment
+    - name: Run the tests
+      run: pipenv run python tests/tests.py
+      working-directory: ./app
+    # - name: Build the docker-compose stack
+    #   run: docker-compose -f docker-compose-cicd.yaml up -d
+    #   working-directory: ./development_environment
+    # - name: Docker info
+    #   run: docker info
+    # - name: Docker ps
+    #   run: docker ps
+    # - name: Runnint the tests...
+    #   run: docker exec -i "$(docker-compose -f docker-compose-cicd.yaml ps -q backend)" pipenv run python tests/tests.py
+    #   working-directory: ./development_environment
     - name: Run a multi-line script
       run: |
         echo Add other actions to build,
