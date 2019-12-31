@@ -49,8 +49,8 @@ jobs:
         python-version: '3.7'
     - name: Install system dependencies
       run: |
-        apt-get install libmysqlclient-dev
-        apt-get install python-dev
+        sudo apt-get install libmysqlclient-dev
+        sudo apt-get install python-dev
     - name: create .env file
       run: cp env .env
       working-directory: ./app
