@@ -36,7 +36,8 @@ jobs:
       env: # Or as an environment variable
         super_secret: yeeeeey
         # super_secret: ${{ secrets.GOOGLE_BUCKET }}
-        
+    
+    - uses: actions/checkout@v1    
     - name: create .env
       # run: cp env .env
       run: ls
