@@ -12,22 +12,22 @@ jobs:
     runs-on: ubuntu-latest
     env:
       FLASK_APP: main
-    #   FLASK_ENV: development
-    #   CONFIG_MODE: 'config.Test'
-    #   PYTHONUNBUFFERED: 1
-    #   GOOGLE_BUCKET_PREFIX: https://storage.googleapis.com/
-    #   GOOGLE_DISCOVERY_URL: https://accounts.google.com/.well-known/openid-configuration
-    #   FACEBOOK_AUTHORIZE_URL: https://graph.facebook.com/oauth/authorize
-    #   FACEBOOK_ACCESS_TOKEN_URL: https://graph.facebook.com/oauth/access_token
-    #   FACEBOOK_USER_INFO_URL: https://graph.facebook.com/me?fields=email
-    #   GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID}}
-    #   GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET}}
-    #   FACEBOOK_CLIENT_ID: ${{ secrets.FACEBOOK_CLIENT_ID}}
-    #   FACEBOOK_CLIENT_SECRET:  ${{ secrets.FACEBOOK_CLIENT_SECRET}}
-    #   GOOGLE_PROJECT: ${{ secrets.GOOGLE_PROJECT}}
-    #   GOOGLE_BUCKET: ${{ secrets.GOOGLE_BUCKET}}
-    #   GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS}}
-    #   DATABASE_URI: ${{ secrets.DATABASE_URI}}
+      FLASK_ENV: development
+      CONFIG_MODE: 'config.Test'
+      PYTHONUNBUFFERED: 1
+      GOOGLE_BUCKET_PREFIX: https://storage.googleapis.com/
+      GOOGLE_DISCOVERY_URL: https://accounts.google.com/.well-known/openid-configuration
+      FACEBOOK_AUTHORIZE_URL: https://graph.facebook.com/oauth/authorize
+      FACEBOOK_ACCESS_TOKEN_URL: https://graph.facebook.com/oauth/access_token
+      FACEBOOK_USER_INFO_URL: https://graph.facebook.com/me?fields=email
+      GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID}}
+      GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET}}
+      FACEBOOK_CLIENT_ID: ${{ secrets.FACEBOOK_CLIENT_ID}}
+      FACEBOOK_CLIENT_SECRET:  ${{ secrets.FACEBOOK_CLIENT_SECRET}}
+      GOOGLE_PROJECT: ${{ secrets.GOOGLE_PROJECT}}
+      GOOGLE_BUCKET: ${{ secrets.GOOGLE_BUCKET}}
+      GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS}}
+      DATABASE_URI: ${{ secrets.DATABASE_URI}}
 
     steps:
     - uses: actions/checkout@v1
@@ -37,46 +37,12 @@ jobs:
         super_secret: yeeeeey
         # super_secret: ${{ secrets.GOOGLE_BUCKET }}
     
-    - name: replace
-      uses: frabert/replace-string-action@v1.1
-      with:
-        pattern: 'Hello, (\w+)!'
-        string: 'Hello, world!'
-        replace-with: 'I greet you, $1!'
-    
-    # - uses: actions/checkout@v1    
     - name: create .env
-      # run: cp env .env
       run: ls
       working-directory: ./app
     - name: Change variables
-      env:
-        FLASK_APP: main
-        FLASK_ENV: development
-        CONFIG_MODE: 'config.Test'
-        PYTHONUNBUFFERED: 1
-        GOOGLE_BUCKET_PREFIX: https://storage.googleapis.com/
-        GOOGLE_DISCOVERY_URL: https://accounts.google.com/.well-known/openid-configuration
-        FACEBOOK_AUTHORIZE_URL: https://graph.facebook.com/oauth/authorize
-        FACEBOOK_ACCESS_TOKEN_URL: https://graph.facebook.com/oauth/access_token
-        FACEBOOK_USER_INFO_URL: https://graph.facebook.com/me?fields=email
-        GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID}}
-        GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET}}
-        FACEBOOK_CLIENT_ID: ${{ secrets.FACEBOOK_CLIENT_ID}}
-        FACEBOOK_CLIENT_SECRET:  ${{ secrets.FACEBOOK_CLIENT_SECRET}}
-        GOOGLE_PROJECT: ${{ secrets.GOOGLE_PROJECT}}
-        GOOGLE_BUCKET: ${{ secrets.GOOGLE_BUCKET}}
-        GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS}}
-        DATABASE_URI: ${{ secrets.DATABASE_URI}}
       run: |
-        sh """sed -i "s*YOUR_DATABASE_URI*${{ secrets.DATABASE_URI}}*g" .env"""
-        sh """sed -i "s*YOUR_GOOGLE_CLIENT_ID*${GOOGLE_CLIENT_ID}*g" .env"""
-        sh """sed -i "s*YOUR_GOOGLE_CLIENT_SECRET*${GOOGLE_CLIENT_SECRET}*g" .env"""
-        sh """sed -i "s*YOUR_GOOGLE_APPLICATION_CREDENTIALS*.credentials/crm-service-storage-key.json*g" .env"""
-        sh """sed -i "s*YOUR_GOOGLE_PROJECT*${GOOGLE_PROJECT}*g" .env"""
-        sh """sed -i "s*YOUR_GOOGLE_BUCKET*${GOOGLE_BUCKET}*g" .env"""
-        sh """sed -i "s*YOUR_FACEBOOK_CLIENT_ID*${FACEBOOK_CLIENT_ID}*g" .env"""
-        sh """sed -i "s*YOUR_FACEBOOK_CLIENT_SECRET*${FACEBOOK_CLIENT_SECRET}*g" .env"""
+        sh ../deployment_automation/replace_variables.sh app.yaml
       working-directory: ./app
     - name: Build the docker-compose stack
       run: docker-compose -f docker-compose-cicd.yaml up -d
