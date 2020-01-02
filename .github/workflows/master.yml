@@ -1,4 +1,4 @@
-name: Master Pipeline
+name: CI
 
 on:
   push:
