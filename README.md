@@ -1,8 +1,8 @@
 # CRM
 
-[![Coverage](https://codecov.io/gh/CarlosEspinoTimon/crm/branch/feature%2Fcicd/graph/badge.svg)]
+[![Coverage](https://codecov.io/gh/CarlosEspinoTimon/crm/branch/feature%2Fcicd/graph/badge.svg)](https://codecov.io/)
 
-[![Build](https://github.com/CarlosEspinoTimon/crm/workflows/CI/badge.svg)]
+[![Build](https://github.com/CarlosEspinoTimon/crm/workflows/CI/badge.svg)](https://github.com/features/actions)
 
 This is an example of a backend CRM Service that is composed of:
 - Server: developed in Python 3.7 with the Flask framework
