@@ -1,21 +1,30 @@
 # CRM
 
+[![Coverage](https://codecov.io/gh/CarlosEspinoTimon/crm/branch/master/graph/badge.svg)](https://codecov.io/) [![Build](https://github.com/CarlosEspinoTimon/crm/workflows/CI/badge.svg)](https://github.com/features/actions)
+
 This is an example of a backend CRM Service that is composed of:
 - Server: developed in Python 3.7 with the Flask framework
 - Database: a MySQL 5.7 database
 
 With this service register users can manage customers.
 
+**NOTE:**
 As special things to be aware of:
 - The server is able to store customer profile images in a Google Cloud Storage [Bucket](https://cloud.google.com/storage/docs/key-terms#buckets).
 - The server implements Oauth2 autentication with Google and Facebook.
 
 In the `Obtain credentials` section there is some information about how to obtain the necessary credentials.
 
-## __Getting Started__
+##### Table of Contents
+1. Getting Started
+2. Working in the project
+3. Deployment
+
+
+## 1. Getting Started
 -----------------------
 
-### __Prerequisites__
+### 1.1. __Prerequisites__
 
 You need to have installed:
 - docker
@@ -29,7 +38,7 @@ Here are some links to install Docker in [Ubuntu](https://docs.docker.com/instal
 
 In this [link](https://docs.docker.com/compose/install/) there is information about how to install docker-compose in the Ubuntu, Mac and Windows OS.
 
-### __Obtain credentials__
+### 1.2. __Obtain credentials__
 
 * ___Google Cloud Storage Bucket___
 
@@ -67,7 +76,7 @@ You have to select `Add a New App` in the `Apps` dropdown. Pick a name and creat
 Once the application if created you have to go to the `App Configuration` section and set the URL of the application to https://localhost:5000.
 
 
-### __Set the environment variables__
+### 1.3. __Set the environment variables__
 
 To facilitate the configuration of the app for development and production (using [12-factor](https://12factor.net/) principles), the server takes some environment variables from and .env file located in the `app` directory.
 
@@ -104,6 +113,8 @@ DATABASE_URI=YOUR_MYSQL_URI
 # Bucket variables
 GOOGLE_PROJECT=YOUR_GOOGLE_PROJECT
 GOOGLE_BUCKET=YOUR_GOOGLE_BUCKET
+
+DATABASE_TEST_URI=mysql://user:password@db_test/test_db
 ```
 
 If you run `make setup-environment` from the `development_environmet` directory you will get a file like this one. Then, you just have to change the values in the `#USER DEFINED VARIABLES` section.
@@ -114,13 +125,13 @@ The last command will also configure the githook, see the Githooks section to se
 
 The `DATABASE_URI` is just for production, the config.Dev configuration configures by default the URI to the local database declared in the docker-compose, so you can leave it like this in the example.
 
-### __Run the server__
+### 1.4. __Run the server__
 
 To start it, you have to run (from the `development_environmet` directory):
 
 `docker-compose up`
 
-### __Upgrade database__
+### 1.5. __Upgrade database__
 
 This project uses [Flask SQL Alchemy](https://flask-sqlalchemy.palletsprojects.com/en/2.x/) as ORM and [flask-Migrate](https://flask-migrate.readthedocs.io/en/latest/) to control the migrations in the database. The first time you run the server you have to upgrade your database. 
 
@@ -128,13 +139,13 @@ To do so, you can just execute (from the `development_environmet` directory):
 
 `make db-upgrade`
 
-### __Running the tests__
+### 1.6. __Running the tests__
 
 The test are run in a test database, to run them you can just execute (from the `development_environmet` directory):
 
 `make backend-tests`
 
-### __Create a User to interact with the API__
+### 1.7. __Create a User to interact with the API__
 
 To access the Customer endpoints you need to have a register user. There is a Python script in the `app` directory called `create_user.py`, that recieves the email and password as params, it encrypts the password and insert the record in the database. You can execute the script within the container (modules required are already installed). To access you can execute(from the `development_environmet` directory):
 
@@ -146,7 +157,7 @@ Once in there you can run:
 
 After that you can log in the system.
 
-## __Working in the project__
+## 2. Working in the project
 ------------------------------
 
 This project is build in a dockerized environment and it has some peculiarities. Everything the developer needs is inside the backend container. 
@@ -154,17 +165,17 @@ This project is build in a dockerized environment and it has some peculiarities.
 As you will see, there is a githook configured and all the actions the githooks does are run in the container.
 
 
-### __Makefile__
+### 2.1. __Makefile__
 
 To interact with this dockerized environment, you can use some `make` commands. There is a Makefile in the `development_environment` directory with a few make commands that will help the developer. As everything must be done inside the container this Makefile simplifies each action that must be done.
 
-### __GitHooks__
+### 2.2. __GitHooks__
 
 In this project I have configured a githook that is run before each commit to ensure that the code to be commited passes all the test, has no codestyle errors (regarding the PEP8) and in the end, if everything has gone ok, it generates the API documentation with Sphinx. After all this, the commit is done.
 
 This githook is configured the first time when you run `make setup-environment`.
 
-### __Install new modules__
+### 2.3. __Install new modules__
 
 The modules have to be installed in the server that is inside the container, so if a developer needs to install a new module, it must be installed with the following command:
 
@@ -172,7 +183,7 @@ The modules have to be installed in the server that is inside the container, so 
 
 This will install the module in the container and it will be added to the Pipfile which is shared with the host and tracked in the repository.
 
-### __Debug the code__
+### 2.4. __Debug the code__
 
 There is a docker-compose file that inits the server in a debug mode with the ptvsd module. Then you have to configure your environment to be able to connect with the server. Here I show an example of the `launch.json` for Visual Studio Code:
 
@@ -208,7 +219,7 @@ Then you have to start the Visual Studio Code Debugger. Once started you can int
 
 Beware that you `must have` the same version of the ptvsd module installed in your host.
 
-## __Documentation__
+## 2.5. __Documentation__
 
 As you can see in the GitHooks section, this proyect is configured to automatically generate the documentation for the API with Sphinx before each commit. The generated html code is in `app/docs/_build/html/` you can open the `index.html` and navigate through the documentation.
 
@@ -216,19 +227,22 @@ If you want to see the documentation without doing any commit you can run (from 
 
 `make documentation`
 
-## __Deployment__
+## 3. Deployment
 ------------------
 
-### __Automated deployment__
+### 3.1. __Automated deployment__
 
-This repository is integrated within a CI/CD jenkins pipeline. This pipeline builds the environment for the tests and runs them, also, when changes are made in the master branch it deploys the code to App Engine Flexible.
-### __Manual deployment__
+This repository has two Github Action pipeline configured, one for the master branch that at the end, if tests are passed, it deploys the code to App Engine Flex, an another for the rests of the branches that just run all the tests to check whether something has been broken or not.
+
+### 3.2. __Manual deployment__
 
 This server is prepared to be deployed in Google App Engine Flexible, if you wish to deploy it manually, you need to configure the `app.yaml` file and generate the latest `requirements.txt`.
-#### __Configure app.yaml__
+
+#### 3.3. __Configure app.yaml__
 
 In the repository there is an `app.yaml` example, in this file you have to change the environment variables for the real ones. For security, to avoid uploading credentials to the repository, you should create a copy of the file and call it `real_app.yaml` which is already in the .gitignore, put the real environment variables there and deploy it with this file.
-#### __Generate requirements.txt__
+
+#### 3.4. __Generate requirements.txt__
 
 To generate the latest `requirements.txt`, you have to get into the container:
 
@@ -240,7 +254,6 @@ and generate the file:
 
 it is also needed the gunicorn module:
 
-`echo "gunicorn==19.9.0" >> requirements.txt`
 `echo "gunicorn==20.0.4" >> requirements.txt`
 
 we have to remove the first line created by the pipenv lock -r
@@ -248,6 +261,7 @@ we have to remove the first line created by the pipenv lock -r
 `echo "$(tail -n +2 requirements.txt)" > requirements.txt`
 
 This file will be created inside the container and in the folder shared with the host.
-#### __Deploy it__
+
+#### 3.5. __Deploy it__
 
 Once you have it, you can deploy the app by running: `gcloud app deploy real_app.yaml` in the `app` directory. Beware that you have to have [initiated the cloud SDK](https://cloud.google.com/sdk/docs/initializing "Initializing Cloud SDK")

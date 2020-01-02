@@ -3,7 +3,7 @@ services:
   backend:
     build:
       context: ../app/
-      dockerfile: ../development_environmet/Dockerfile
+      dockerfile: dev.Dockerfile
       args:
         username: "nonroot"
     ports:

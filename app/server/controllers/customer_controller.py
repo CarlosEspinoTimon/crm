@@ -88,7 +88,7 @@ def post_customer():
     :reqheader Authorization: Bearer token
     """
     data = request.get_json()
-    data['id'] = get_user_id_from_token()
+    data['user_id'] = get_user_id_from_token()
     return create_customer(data)
 
 
@@ -123,7 +123,7 @@ def put_customer(customer_id):
     :reqheader Authorization: Bearer token
     """
     data = request.get_json()
-    data['id'] = get_user_id_from_token()
+    data['user_id'] = get_user_id_from_token()
     return update_customer(data, customer_id)
 
 
