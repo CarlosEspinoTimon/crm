@@ -35,8 +35,8 @@ def create_customer(data):
             name=data.get('name'),
             surname=data.get('surname'),
             photo_url=photo_url,
-            created_by=data.get('id'),
-            last_modified_by=data.get('id'),
+            created_by=data.get('user_id'),
+            last_modified_by=data.get('user_id'),
             created_at=datetime.now(),
             last_modified_at=datetime.now()
         )
@@ -59,7 +59,7 @@ def update_customer(data, customer_id):
             image = Image()
             photo_url = image.upload(data, customer.photo_url)
             customer.photo_url = photo_url
-        customer.last_modified_by = data.get('id')
+        customer.last_modified_by = data.get('user_id')
         customer.last_modified_at = datetime.now()
         _save_customer(customer)
         response = jsonify('Customer sucessfully updated'), 200

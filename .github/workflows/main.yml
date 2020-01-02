@@ -76,6 +76,18 @@ jobs:
       run: pipenv run python tests/tests.py
       working-directory: ./app
 
+    - name: Generate coverage report
+      run: |
+      pipenv run coverage run --source=server tests/tests.py
+      pipenv run coverage xml
+      working-directory: ./app
+
+    - name: Upload coverage to Codecov  
+      uses: codecov/codecov-action@v1
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        file: ./app/coverage.xml
+        fail_ci_if_error: true
 
 
 
