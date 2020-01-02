@@ -76,10 +76,12 @@ jobs:
       run: pipenv run python tests/tests.py
       working-directory: ./app
 
+    - name: Run coverage
+      run: pipenv run coverage run --source=server tests/tests.py
+      working-directory: ./app
+
     - name: Generate coverage report
-      run: |
-      pipenv run coverage run --source=server tests/tests.py
-      pipenv run coverage xml
+      run: pipenv run coverage xml
       working-directory: ./app
 
     - name: Upload coverage to Codecov  
