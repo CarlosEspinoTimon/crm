@@ -107,10 +107,11 @@ jobs:
       run: |
         pipenv lock -r >  requirements.txt
         echo "gunicorn==20.0.4" >> requirements.txt
+        echo "setuptools==40.3.0" >> requirements.txt
         echo "$(tail -n +2 requirements.txt)" > requirements.txt
       working-directory: ./app
 
-    - name: Run deployment
+    - name: Deploy
       if: success()
       uses: actions/gcloud/cli@master
       env:

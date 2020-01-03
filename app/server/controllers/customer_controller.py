@@ -28,8 +28,8 @@ def get_all_customers():
 
     Function that returns all the customers.
 
-    This endpoint is protected and only users can use it by passing their
-    authentication token through the Authorization Header.
+    This endpoint is protected and only registered users can use it by passing
+    their authentication token through the Authorization Header.
 
     :returns: The Customers.
     :rtype: list.
@@ -46,8 +46,8 @@ def get_customer(customer_id):
 
     Function that given an id it returns the customer.
 
-    This endpoint is protected and only users can use it by passing their
-    authentication token through the Authorization Header.
+    This endpoint is protected and only registered users can use it by passing
+    their authentication token through the Authorization Header.
 
     :param customer_id: the id of the customer.
     :type customer_id: int
@@ -68,8 +68,8 @@ def post_customer():
 
     Function that given the customer data it creates it.
 
-    This endpoint is protected and only users can use it by passing their
-    authentication token through the Authorization Header.
+    This endpoint is protected and only registered users can use it by passing
+    their authentication token through the Authorization Header.
 
     Example::
 
@@ -102,8 +102,8 @@ def put_customer(customer_id):
     Function that given the customer_id it updates it with the data sent in the
     body of the request.
 
-    This endpoint is protected and only users can use it by passing their
-    authentication token through the Authorization Header.
+    This endpoint is protected and only registered users can use it by passing
+    their authentication token through the Authorization Header.
 
     Example::
 
@@ -135,8 +135,8 @@ def delete_customer(customer_id):
 
     Function that given the customer id it deletes it.
 
-    This endpoint is protected and only users can use it by passing their
-    authentication token through the Authorization Header.
+    This endpoint is protected and only registered users can use it by passing
+    their authentication token through the Authorization Header.
 
     :param customer_id: the id of the customer.
     :type customer_id: int
