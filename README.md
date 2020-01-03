@@ -1,6 +1,6 @@
 # CRM
 
-[![Coverage](https://codecov.io/gh/CarlosEspinoTimon/crm/branch/master/graph/badge.svg)](https://codecov.io/) [![Build](https://github.com/CarlosEspinoTimon/crm/workflows/CI/badge.svg)](https://github.com/features/actions)
+[![Coverage](https://codecov.io/gh/CarlosEspinoTimon/crm/branch/master/graph/badge.svg)](https://codecov.io/gh/CarlosEspinoTimon/crm/branch/master) [![Build](https://github.com/CarlosEspinoTimon/crm/workflows/CI/badge.svg)](https://github.com/CarlosEspinoTimon/crm/actions?query=workflow%3ACI)
 
 This is an example of a backend CRM Service that is composed of:
 - Server: developed in Python 3.7 with the Flask framework
@@ -252,9 +252,11 @@ and generate the file:
 
 `pipenv lock -r >  requirements.txt`
 
-it is also needed the gunicorn module:
+it is also needed the gunicorn and setuptools modules:
 
 `echo "gunicorn==20.0.4" >> requirements.txt`
+
+`echo "setuptools==40.3.0" >> requirements.txt`
 
 we have to remove the first line created by the pipenv lock -r
 
@@ -264,4 +266,4 @@ This file will be created inside the container and in the folder shared with the
 
 #### 3.5. __Deploy it__
 
-Once you have it, you can deploy the app by running: `gcloud app deploy real_app.yaml` in the `app` directory. Beware that you have to have [initiated the cloud SDK](https://cloud.google.com/sdk/docs/initializing "Initializing Cloud SDK")
+Once you have it, you can deploy the app by running: `gcloud app deploy real_app.yaml` in the `app` directory (outside the container). Beware that you have to have [initiated the cloud SDK](https://cloud.google.com/sdk/docs/initializing "Initializing Cloud SDK")
