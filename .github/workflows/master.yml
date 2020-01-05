@@ -118,7 +118,6 @@ jobs:
         CLOUDSDK_CORE_PROJECT: ${{ secrets.GOOGLE_PROJECT }}
       with:
         entrypoint: gcloud
-        args: app deploy ./app/app.yaml --quiet --stop-previous-version
-
+        args: app deploy ./app/app.yaml --quiet 
 
 
