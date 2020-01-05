@@ -16,10 +16,10 @@ As special things to be aware of:
 In the `Obtain credentials` section there is some information about how to obtain the necessary credentials.
 
 ##### Table of Contents
-1. [Getting Started](#1.-getting-started)
-2. [Working in the project](#2.-working-in-the-project)
-3. [Deployment](#3.-deployment)
-4. [Actual state of the project](#4.-actual-state-of-the-project)
+1. [Getting Started](#1-getting-started)
+2. [Working in the project](#2-working-in-the-project)
+3. [Deployment](#3-deployment)
+4. [Actual state of the project](#4-actual-state-of-the-project)
 
 
 ## 1. Getting Started
