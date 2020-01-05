@@ -275,7 +275,7 @@ Once you have it, you can deploy the app by running: `gcloud app deploy real_app
 
 ### 4.1. OAuth authentication problems in production
 
-As it has been explained, this projects allows users to log in through their Google or Facebook accounts using the OAuth protocol. This is working perfectly in the development environment, however is not working in production. If you deploy the app following the [documentation](#3.2.-__manual-deployment__) you will be able to log with the user and password endpoint and, after obtain the token, use the API, but you will not be able to log using the Google and Facebook endpoints.
+As it has been explained, this projects allows users to log in through their Google or Facebook accounts using the OAuth protocol. This is working perfectly in the development environment, however is not working in production. If you deploy the app following the [documentation](#32-manual-deployment) you will be able to log with the user and password endpoint and, after obtain the token, use the API, but you will not be able to log using the Google and Facebook endpoints.
 
 This is mainly happening for two reasons:
 - The app is running under http and the OAuth module must be under https
