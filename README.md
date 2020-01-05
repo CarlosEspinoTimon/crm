@@ -16,9 +16,10 @@ As special things to be aware of:
 In the `Obtain credentials` section there is some information about how to obtain the necessary credentials.
 
 ##### Table of Contents
-1. Getting Started
-2. Working in the project
-3. Deployment
+1. [Getting Started](#1.-getting-started)
+2. [Working in the project](#2.-working-in-the-project)
+3. [Deployment](#3.-deployment)
+4. [Actual state of the project](#4.-actual-state-of-the-project)
 
 
 ## 1. Getting Started
@@ -238,11 +239,11 @@ This repository has two Github Action pipeline configured, one for the master br
 
 This server is prepared to be deployed in Google App Engine Flexible, if you wish to deploy it manually, you need to configure the `app.yaml` file and generate the latest `requirements.txt`.
 
-#### 3.3. __Configure app.yaml__
+#### 3.2.1 __Configure app.yaml__
 
 In the repository there is an `app.yaml` example, in this file you have to change the environment variables for the real ones. For security, to avoid uploading credentials to the repository, you should create a copy of the file and call it `real_app.yaml` which is already in the .gitignore, put the real environment variables there and deploy it with this file.
 
-#### 3.4. __Generate requirements.txt__
+#### 3.2.2. __Generate requirements.txt__
 
 To generate the latest `requirements.txt`, you have to get into the container:
 
@@ -264,6 +265,41 @@ we have to remove the first line created by the pipenv lock -r
 
 This file will be created inside the container and in the folder shared with the host.
 
-#### 3.5. __Deploy it__
+#### 3.2.3. __Deploy it__
 
 Once you have it, you can deploy the app by running: `gcloud app deploy real_app.yaml` in the `app` directory (outside the container). Beware that you have to have [initiated the cloud SDK](https://cloud.google.com/sdk/docs/initializing "Initializing Cloud SDK")
+
+
+## 4. Actual state of the project
+---------------------------------
+
+### 4.1. OAuth authentication problems in production
+
+As it has been explained, this projects allows users to log in through their Google or Facebook accounts using the OAuth protocol. This is working perfectly in the development environment, however is not working in production. If you deploy the app following the [documentation](#3.2.-__manual-deployment__) you will be able to log with the user and password endpoint and, after obtain the token, use the API, but you will not be able to log using the Google and Facebook endpoints.
+
+This is mainly happening for two reasons:
+- The app is running under http and the OAuth module must be under https
+- Despite after deploy the app you can App Engine pffers an https url to go to, App Engine terminates the HTTPS connection at the load balancer and it forwards the request to the application.
+
+To solve this it would be necessary to:
+- Configure gunicorn to deploy the app under https
+- Configure the nginx proxy that runs between App Engine and the app deployed
+
+I have tried to create a self-signed certificate and pass it as params running the entrypoint:
+
+```
+entrypoint: gunicorn --certfile cert.pem --keyfile key.pem -b :$PORT main:app
+```
+
+After doing this, the server logs informed that the server was listening to https://0.0.0.0:8080, which is good, because before it said http://0.0.0.0:8080. However, when try to call a method it returned a 502 Bad Gateway error (nginx).
+
+This is because the nginx proxy must be configured. I followed Google App Engine (documentation)[https://cloud.google.com/appengine/docs/flexible/python/runtime#recommended_gunicorn_configuration] and created a gunicorn.conf.py and run the app with the entrypoint:
+
+```
+entrypoint: gunicorn -c gunicorn.config.py --certfile cert.pem --keyfile key.pem -b :$PORT main:app
+```
+
+However, after doing this I got the same error.
+
+
+
